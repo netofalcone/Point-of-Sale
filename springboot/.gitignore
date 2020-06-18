@@ -1,8 +1,12 @@
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
+!.mvn
 !**/src/main/**
 !**/src/test/**
+/media
+/.vscode/
+/src/main/resources/application.properties
 
 ### STS ###
 .apt_generated

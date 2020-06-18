@@ -54,7 +54,7 @@ private List<Phone> phones; //*
 					)) 
 private List<Role> roles;  
 
-/* Vai criar a tabela users_role, com as colunas user_id e roled_id, criamos uma constraint unique_role_user
+/* Vai criar  a tabela users_role, com as colunas user_id e roled_id, criamos uma constraint unique_role_user
  *  em seguida fazendo um join da coluna */
 
 public Long getId() {

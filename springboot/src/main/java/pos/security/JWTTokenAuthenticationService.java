@@ -45,6 +45,7 @@ public class JWTTokenAuthenticationService {
 		String token = TOKEN_PREFIX + " " + JWT;				
 		/*adiciona no cabeçalho http*/		
 		response.addHeader(HEADER_STRING, token);		
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		/*escreve  token como resposta no corpo do http*/
 		response.getWriter().write("{\"Authorization\": \""+token+"\"}");
 	

@@ -9,6 +9,9 @@ form{
   background-color: #FFFFFF;
   border-radius: 10px;
 }
+input{
+  margin-bottom: 5px;
+}
 #div-form{
   padding-right: 20px;
   padding-left: 20px;
@@ -30,3 +33,4 @@ form{
   font-size: 50px;
   padding-top: 50px;
 }
+

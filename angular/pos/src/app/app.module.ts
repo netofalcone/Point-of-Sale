@@ -10,12 +10,16 @@ import {HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from "@angular/forms";
 import { HomeComponent } from './components/home/home.component';
 import {ToastrModule} from "ngx-toastr";
+import { HeaderComponent } from './template/header/header.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,9 @@ import {ToastrModule} from "ngx-toastr";
     HttpClientModule,
     ReactiveFormsModule,
     HttpInterceptorModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatToolbarModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

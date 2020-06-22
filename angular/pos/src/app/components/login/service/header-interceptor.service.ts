@@ -10,7 +10,6 @@ export class HeaderInterceptorService implements HttpInterceptor{
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
    if (localStorage.getItem('token') !== null) {
     const token = 'Bearer ' + localStorage.getItem('token');
-    console.log(token)
     const tokenRequest = req.clone({
       headers : req.headers.set('Authorization', token)
     });

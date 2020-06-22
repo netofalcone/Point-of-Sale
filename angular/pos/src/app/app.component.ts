@@ -1,5 +1,6 @@
+import { LoginService } from './components/login/service/login.service';
 import { Component } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AppComponent {
   title = 'pos';
-  constructor() {}
-
+  constructor(private login: LoginService) {
+    this.login.validLogin();
+  }
 }

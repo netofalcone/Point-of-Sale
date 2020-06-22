@@ -16,15 +16,23 @@ export class LoginService {
   login(user) {
     return this.http.post(AppConstants.baseLogin, JSON.stringify(user)).subscribe(data => {
       var token = JSON.parse(JSON.stringify(data)).Authorization.split(' ')[1];
-      localStorage.setItem("token",token);
+      localStorage.setItem('token', token);
       this.goToHome();
     },
-    error =>{
+    error => {
       this.tosastr.error('Email ou senha inválidos.', 'Falha ao realizar login');
     });
   }
   public goToHome(): void {
-    setTimeout(()=> this.router.navigate(['/home']), 1000);
+    this.router.navigate(['']);
   }
-
+  validLogin(){
+    if (localStorage.getItem('token') === null ) {
+      this.router.navigate(['/login']);
+  }
+  }
+  logOut(){
+    localStorage.clear();
+    this.validLogin();
+  }
 }

@@ -1,0 +1,6 @@
+.btn{
+  flex: 1 1 auto;
+}
+#singOut{
+  cursor: pointer;
+}

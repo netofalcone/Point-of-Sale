@@ -6,11 +6,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginComponent
   },
   {
-    path: 'home',
+    path: '',
     component: HomeComponent
   }
 ];
@@ -19,4 +19,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+}

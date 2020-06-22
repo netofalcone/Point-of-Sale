@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import {HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from "@angular/forms";
 import { HomeComponent } from './components/home/home.component';
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HomeComponent } from './components/home/home.component';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    HttpInterceptorModule
+    HttpInterceptorModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -58,7 +58,7 @@ public class JWTTokenAuthenticationService {
 	/* Recebendo a requisição do navegador, ele válida o token que está no navegador. 
 	  Retorna o usuário Validado com token ou caso não seja válido, retorna null*/	
 
-	public Authentication getAuthentication(HttpServletRequest request) {
+	public Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response) {
 		/*Pega o token enviado no HEADER http*/
 		String token = request.getHeader(HEADER_STRING);		
 		if(token != null) {
@@ -84,7 +84,7 @@ public class JWTTokenAuthenticationService {
 			 	}
 			 }
 			 				
-		
+			response.addHeader("Access-Control-Allow-Origin", "*");
 			return null; /*Não autorizado*/
 		}
 	

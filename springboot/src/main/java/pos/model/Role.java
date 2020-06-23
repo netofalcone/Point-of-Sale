@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 
-@Entity
-@Table(name ="role")
+@Entity(name ="role")
 @SequenceGenerator(name = "seq_role", sequenceName = "seq_role", allocationSize = 1, initialValue = 1)
 public class Role implements GrantedAuthority{
 	

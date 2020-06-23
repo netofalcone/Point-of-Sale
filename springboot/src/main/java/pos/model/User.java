@@ -1,5 +1,6 @@
 package pos.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -52,7 +53,7 @@ private List<Phone> phones; //*
 				inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table = "role", unique = false, updatable = false,
 				foreignKey = @ForeignKey(name="role_fk", value = ConstraintMode.CONSTRAINT)
 					)) 
-private List<Role> roles;  
+private List<Role> roles;
 
 /* Vai criar  a tabela users_role, com as colunas user_id e roled_id, criamos uma constraint unique_role_user
  *  em seguida fazendo um join da coluna */
@@ -118,11 +119,11 @@ public boolean equals(Object obj) {
 
 
 /*são os acesso do usuário  	ROLE_ADMIN, ROLE_FUNCIONARIO...*/
-//@Override
-//public Collection<? extends GrantedAuthority> getAuthorities() {
-//
-//	return roles;
-//}
+@Override
+public Collection getAuthorities() {
+
+	return roles;
+}
 
 @Override
 public String getUsername() {

@@ -2,13 +2,14 @@ package pos.model;
 
 import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
-import java.util.List;
+
+import java.io.Serializable;
 import java.util.Set;
 
 
 @Entity(name ="role")
 @SequenceGenerator(name = "seq_role", sequenceName = "seq_role", allocationSize = 1, initialValue = 1)
-public class Role implements GrantedAuthority{
+public class Role implements Serializable {
 	
 	/**
 	 * 
@@ -44,12 +45,5 @@ public class Role implements GrantedAuthority{
 	public Set<Permission> getPermissions() { return this.permissions; }
 
 	public void setPermissions(Set<Permission> permissions) { this.permissions = permissions; }
-
-	// TODO: Se apagar isso dá pau, porem é desnecessário já que contem o getName e essa interface não serve de nada. o ideal é colocar um extends Serializable
-	public String getAuthority() { /* retorna o nome do papel, acesso ou autorização exemplo ROLE_GERENTE*/
-
-		return this.name;
-	}
-
 
 }

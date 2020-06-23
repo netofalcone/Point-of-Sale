@@ -118,11 +118,11 @@ public boolean equals(Object obj) {
 
 
 /*são os acesso do usuário  	ROLE_ADMIN, ROLE_FUNCIONARIO...*/
-@Override
-public Collection<? extends GrantedAuthority> getAuthorities() {
-	
-	return roles;
-}
+//@Override
+//public Collection<? extends GrantedAuthority> getAuthorities() {
+//
+//	return roles;
+//}
 
 @Override
 public String getUsername() {

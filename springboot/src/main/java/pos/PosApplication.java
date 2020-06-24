@@ -18,12 +18,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"pos.model"})
-@ComponentScan(basePackages = {"pos*"})
 @EnableJpaRepositories(basePackages = {"pos.repository"})
 @EnableTransactionManagement
 @EnableWebMvc
 @RestController
-@EnableAutoConfiguration 
 @EnableCaching
 public class PosApplication implements WebMvcConfigurer {
 

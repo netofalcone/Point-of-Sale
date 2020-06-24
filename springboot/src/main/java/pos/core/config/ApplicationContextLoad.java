@@ -1,4 +1,4 @@
-package pos;
+package pos.core.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;

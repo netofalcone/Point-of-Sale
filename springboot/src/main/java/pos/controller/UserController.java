@@ -25,10 +25,6 @@ import pos.model.User;
 import pos.repository.UserRepository;
 import pos.service.UserService;
 
-
-
-
-
 @CrossOrigin(origins = "")
 @RestController
 @RequestMapping(value = "/user")

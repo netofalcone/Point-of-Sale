@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import pos.ApplicationContextLoad;
+import pos.core.config.ApplicationContextLoad;
 import pos.model.User;
 import pos.repository.UserRepository;
 

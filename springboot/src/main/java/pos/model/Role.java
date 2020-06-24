@@ -1,18 +1,14 @@
 package pos.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import org.springframework.security.core.GrantedAuthority;
+import java.io.Serializable;
+import java.util.Set;
 
-@Entity
-@Table(name ="role")
+
+@Entity(name ="role")
 @SequenceGenerator(name = "seq_role", sequenceName = "seq_role", allocationSize = 1, initialValue = 1)
-public class Role implements GrantedAuthority{
+public class Role implements Serializable {
 	
 	/**
 	 * 
@@ -20,36 +16,33 @@ public class Role implements GrantedAuthority{
 	private static final long serialVersionUID = 1L;
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;	
-	private String nameRole;	
-	
-	public String getAuthority() { /* retorna o nome do papel, acesso ou autorização exemplo ROLE_GERENTE*/
-		
-		return this.nameRole;
-	}
-	
-	
-	
-	
+	@Column(name = "id")
+	private Integer id;
 
-	public Long getId() {
-		return id;
-	}
+	@Column(name = "name")
+	private String name;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@Column(name = "description")
+	private String description;
 
-	public String getNameRole() {
-		return nameRole;
-	}
+	private boolean deleted = false;
 
-	public void setNameRole(String nameRole) {
-		this.nameRole = nameRole;
-	}
-	
-	
-	
-	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "role_permission", joinColumns = @JoinColumn(name = "id_role"), inverseJoinColumns = @JoinColumn(name = "id_permission"))
+	private Set<Permission> permissions;
+
+	public String getName() { return this.name; }
+
+	public String getDescription() { return this.description; }
+
+	public boolean isDeleted() { return this.deleted; }
+
+	public void setDeleted(boolean deleted) { this.deleted = deleted; }
+
+	public Integer getId() { return this.id; }
+
+	public Set<Permission> getPermissions() { return this.permissions; }
+
+	public void setPermissions(Set<Permission> permissions) { this.permissions = permissions; }
 
 }

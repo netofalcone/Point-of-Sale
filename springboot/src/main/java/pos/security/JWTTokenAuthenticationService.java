@@ -45,6 +45,7 @@ public class JWTTokenAuthenticationService {
 		String token = TOKEN_PREFIX + " " + JWT;				
 		/*adiciona no cabeçalho http*/		
 		response.addHeader(HEADER_STRING, token);		
+		openCors(response);
 		/*escreve  token como resposta no corpo do http*/
 		response.getWriter().write("{\"Authorization\": \""+token+"\"}");
 	
@@ -57,7 +58,7 @@ public class JWTTokenAuthenticationService {
 	/* Recebendo a requisição do navegador, ele válida o token que está no navegador. 
 	  Retorna o usuário Validado com token ou caso não seja válido, retorna null*/	
 
-	public Authentication getAuthentication(HttpServletRequest request) {
+	public Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response) {
 		/*Pega o token enviado no HEADER http*/
 		String token = request.getHeader(HEADER_STRING);		
 		if(token != null) {
@@ -83,9 +84,29 @@ public class JWTTokenAuthenticationService {
 			 	}
 			 }
 			 				
-		
+			openCors(response);
 			return null; /*Não autorizado*/
 		}
+
+
+
+
+
+	private void openCors(HttpServletResponse response) {
+		if(response.getHeader("Access-Control-Allow-Origin") == null){
+			response.addHeader("Access-Control-Allow-Origin", "*");
+		}
+		if(response.getHeader("Access-Control-Allow-Headers") == null){
+			response.addHeader("Access-Control-Allow-Headers", "*");
+		}
+		if(response.getHeader("Access-Control-Request-Headers") == null){
+			response.addHeader("Access-Control-Request-Headers", "*");
+		}
+		if(response.getHeader("Access-Control-Allow-Methods") == null){
+			response.addHeader("Access-Control-Allow-Methods", "*");
+		}
+		
+	}
 	
 	
 	

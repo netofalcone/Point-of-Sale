@@ -1,0 +1,36 @@
+
+form{
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  text-align: center;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+}
+input{
+  margin-bottom: 5px;
+}
+#div-form{
+  padding-right: 20px;
+  padding-left: 20px;
+}
+#btn-login{
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: #2F4683;
+  border: none;
+}
+#logoPos{
+  height: 150px;
+  margin-bottom: 5%;
+  background-color: #2F4683;
+  border-radius: 10px 10px 0px 0px;
+}
+#logoPos h1{
+  color: white;
+  font-size: 50px;
+  padding-top: 50px;
+}
+

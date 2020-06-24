@@ -2,6 +2,7 @@ package pos.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,7 +32,11 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())		
 		/* Ativando a permissão para acesso a pagina incial do sistema EX: www.sistema.com.br/		 */		
 		.disable().authorizeRequests().antMatchers("/").permitAll()
-		 .antMatchers("/index.html").permitAll()			 
+		 .antMatchers("/index.html").permitAll()
+
+		//permite os clientes em portas diferentes em servidores diferentes, fazerem varias opções de uso da API, leitura, consultas, atualizações, deletes...
+		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
 		 /* URL DE LOGOUT - redireciona após o user deslogar do sistema */
 		 .anyRequest().authenticated().and().logout().logoutSuccessUrl("/index")		 
 		 /*Mapeia a URL de Logout e inválida o usuário*/

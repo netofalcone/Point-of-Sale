@@ -29,7 +29,7 @@ import pos.service.UserService;
 
 
 
-@CrossOrigin(origins = "")
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -38,55 +38,31 @@ public class UserController {
 	private UserRepository userRepository;
 	@Autowired
 	private UserService userService;
-		
-	
-	
-	
-	
+
+
 	@GetMapping(value = "/", produces = "Application/json")
-	@CacheEvict(value="cacheUserEvict", allEntries= true ) // remove do cache coisas que napo estao sendo utilizadas
-	@CachePut(value="cacheUserPut") // indentifica atualizações no banco
+	@CacheEvict(value="cacheUserEvict", allEntries= true ) // Remove do cache coisas que não estão sendo utilizadas
+	@CachePut(value="cacheUserPut") // Indentifica atualizações no banco de dados, e atualiza o cache atual.
 	public ResponseEntity <List<User>>  users() throws InterruptedException {			
-		List<User> users =  userService.users();	
-		//Thread.sleep(6000); /*simulando processo lento*/
+		List<User> users =  userService.ListUsers();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
  	 } 
 	
-	
-		
-	// EXEMPLO DE VERSIONAMENTO DE API, PODE TAMBÉM COLOCAR DIRETO NO REQUESTMAPPING
-	@GetMapping(value = "v1/{idUser}", produces = "Application/json")	
+
+
+	@GetMapping(value = "/{idUser}", produces = "Application/json")
 	@CacheEvict(value="cacheUserEvict", allEntries= true ) 
 	@CachePut(value="cacheUserPut") 
-	public ResponseEntity <User> indexV1(@PathVariable (value = "idUser") Long id) {
-		System.out.println(" CHAMANDO VERSÃO 1 de buscar user por id.");
-		    Optional<User> user = userService.userWithId(id);				
+	public ResponseEntity <User> index(@PathVariable (value = "idUser") Long id) {
+		Optional<User> user = userService.userWithId(id);
 		return new ResponseEntity<User>(user.get(), HttpStatus.OK);
 	 }
 			
-	
-	@GetMapping(value = "v2/{idUser}", produces = "Application/json")	
-	public ResponseEntity <User> indexV2(@PathVariable (value = "idUser") Long id) {
-		System.out.println(" CHAMANDO VERSÃO 2  de buscar user por id.");
-		    Optional<User> user = userService.userWithId(id);				
-		return new ResponseEntity<User>(user.get(), HttpStatus.OK);
-	 }
-		
-	
-	
+
 	
 	@PostMapping(value = "/", produces = "Application/json")
-	public ResponseEntity <User> store( @RequestBody User user) {			
-		for (int phone = 0; phone < user.getPhones().size(); phone++) {			
-			user.getPhones().get(phone).setUser(user);
-	 }					
-		
-		String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-		user.setPassword(passwordCrypted);
-		
-		System.out.println("senha foi criptografada: ");
-		
-		   User userSalved = userService.storeUser(user);			   
+	public ResponseEntity <User> store( @RequestBody User user) {
+		User userSalved = userService.storeUser(user);
 		return new ResponseEntity<User>(userSalved, HttpStatus.CREATED);
 	 
 	 }
@@ -95,33 +71,19 @@ public class UserController {
 	
 	
 	@PutMapping(value = "/", produces = "Application/json")
-	public ResponseEntity <User> update( @RequestBody User user) {	
-		
-		for (int phone = 0; phone < user.getPhones().size(); phone++) {			
-			user.getPhones().get(phone).setUser(user);
-		}	
-		
-		/*Se as senhas diferentes forem diferentes, encripta a nova e manda atualizar*/
-		User userTemporary = userRepository.findUserbyEmail(user.getEmail());		
-		if (!userTemporary.getPassword().equals(user.getPassword())) { 
-			
-		String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-			user.setPassword(passwordCrypted);			
-		}		
-		
+	public ResponseEntity <User> update( @RequestBody User user) {
 		User userUpdate = userService.updateUser(user);	
 		return new ResponseEntity<User>(userUpdate, HttpStatus.OK);
 	
 	}
-	
-		
+
 	
 	
 	@DeleteMapping(value = "/{idUser}", produces = "Application/text")
 	public String delete ( @PathVariable (value = "idUser") Long id) {								
-		   userService.deleteUser(id);	
+		userService.deleteUser(id);
 		return "User Deleted";
-		}
+	}
 
 
 }

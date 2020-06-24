@@ -34,12 +34,26 @@ public class User implements UserDetails {
 private static final long serialVersionUID = 1L;
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO)
-private Long id; 
-private String name;  
+@Column(name = "id")
+private Long id;
 
-@Column(unique=true) // permite apenas 1 item na coluca, evita duplicidade
-private String email;
-private String password;
+	@Column(name = "cpf")
+	private String cpf;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(unique=true) // permite apenas 1 item na coluna, evitando duplicidade.
+	private String email;
+
+	@Column(name = "password")
+	private String password;
+
+	@Column(name = "function")
+	private String function;
+
+	@Column(name = "deleted")
+	private String deleted;
 
 @OneToMany(mappedBy ="user", orphanRemoval = true, cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
 private List<Phone> phones; //*

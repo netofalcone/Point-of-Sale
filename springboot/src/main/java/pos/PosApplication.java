@@ -29,16 +29,8 @@ public class PosApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PosApplication.class, args);
-	System.out.println(new BCryptPasswordEncoder().encode("123"));
-	}
+		}
 	
-	/*Mapeamento global que refletem em todo o sistema*/	
-	@CrossOrigin
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {		
-		registry.addMapping("/user/")
-		.allowedMethods("*")
-		.allowedOrigins("*");
-	}
+
 
 }

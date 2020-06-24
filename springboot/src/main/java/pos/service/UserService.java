@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 		
-		public List<User> users() {						
+		public List<User> ListUsers() {
 				List<User> users =  (List<User>) userRepository.findAll();		
 				return users;
  		}
@@ -38,11 +39,30 @@ public class UserService implements UserDetailsService {
 	 	}
 		
 		public User storeUser( @RequestBody User user) {
-			return userRepository.save(user);			
+
+			for (int phone = 0; phone < user.getPhones().size(); phone++) {
+				user.getPhones().get(phone).setUser(user);
+			}
+
+			String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
+			user.setPassword(passwordCrypted);
+			return userRepository.save(user);
 		}
 		
 		public User updateUser( @RequestBody User user) {
-			return userRepository.save(user);			
+			for (int phone = 0; phone < user.getPhones().size(); phone++) {
+				user.getPhones().get(phone).setUser(user);
+			}
+
+			/*Se as senhas forem diferentes, encripta a nova e manda atualizar */
+			User userVariableTemporary = userRepository.findUserbyEmail(user.getEmail());
+			if (!userVariableTemporary.getPassword().equals(user.getPassword())) {
+
+				String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
+				user.setPassword(passwordCrypted);
+			}
+
+			return userRepository.save(user);
 		}
 		
 		public void deleteUser( @PathVariable (value = "idUser") Long id 

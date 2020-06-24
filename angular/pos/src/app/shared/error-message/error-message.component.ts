@@ -17,7 +17,6 @@ export class ErrorMessageComponent implements OnInit {
   get errorMessages() {
     for (const error in this.control.errors) {
       if (this.control.errors.hasOwnProperty(error) && this.control.touched) {
-        console.log(this.control.errors[error]);
         return ValidationMessage.getErrorMessage(error, this.control.errors[error]);
       }
     }

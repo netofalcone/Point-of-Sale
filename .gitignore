@@ -1,0 +1,5 @@
+
+### STS ###
+.idea
+springboot/src/main/resources/application.properties
+

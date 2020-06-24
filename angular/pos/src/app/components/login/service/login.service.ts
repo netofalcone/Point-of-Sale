@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginService {
 
-  constructor(private http:HttpClient, private router:Router, private tosastr: ToastrService) { }
+  constructor(private http:HttpClient, private router:Router, private toast: ToastrService) { }
 
   login(user) {
     return this.http.post(AppConstants.baseLogin, JSON.stringify(user)).subscribe(data => {
@@ -20,7 +20,7 @@ export class LoginService {
       this.goToHome();
     },
     error => {
-      this.tosastr.error('Email ou senha inválidos.', 'Falha ao realizar login');
+      this.toast.error('Email ou senha inválidos.', 'Falha ao realizar login');
     });
   }
   public goToHome(): void {

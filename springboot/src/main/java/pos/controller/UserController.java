@@ -42,7 +42,7 @@ public class UserController {
 
 	@GetMapping(value = "/", produces = "Application/json")
 	@CacheEvict(value="cacheUserEvict", allEntries= true ) // Remove do cache coisas que não estão sendo utilizadas
-	@CachePut(value="cacheUserPut") // Indentifica atualizações no banco de dados, e atualiza o cache atual.
+	@CachePut(value="cacheUserPut") // Identifica atualizações no banco de dados, e atualiza o cache atual.
 	public ResponseEntity <List<User>>  users() throws InterruptedException {			
 		List<User> users =  userService.ListUsers();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);

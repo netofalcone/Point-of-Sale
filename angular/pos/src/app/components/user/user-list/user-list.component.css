@@ -1,0 +1,32 @@
+#user-list{
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translateY(-38%) translateX(-50%);
+  width: 70%;
+}
+table{
+  background-color: #FFFFFF;
+  border-radius: 10px;
+}
+#btn-new-user{
+  background-color: #3f51b5;
+  border: none;
+}
+#btn-new-back{
+  background-color: #e7e7e7;
+  border: 3px solid #3f51b5;
+  color: #3f51b5;
+}
+#name{
+  width: 550px;
+}
+#actions{
+  width: 100px;
+}
+.material-icons{
+  cursor: pointer;
+}
+input, select{
+  border: none;
+}

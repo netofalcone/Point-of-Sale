@@ -44,11 +44,8 @@ public class JWTTokenAuthenticationService {
 		/*Junta o token com o prefixo*/
 		String token = TOKEN_PREFIX + " " + JWT;				
 		/*adiciona no cabeçalho http*/		
-		response.addHeader(HEADER_STRING, token);
-
-		//liberando resposta para portas diferentes queusam a API, clientes web
-		liberaçãoCors(response);
-
+		response.addHeader(HEADER_STRING, token);		
+		openCors(response);
 		/*escreve  token como resposta no corpo do http*/
 		response.getWriter().write("{\"Authorization\": \""+token+"\"}");
 	
@@ -63,6 +60,7 @@ public class JWTTokenAuthenticationService {
 	  Retorna o usuário Validado com token ou caso não seja válido, retorna null*/
 	public Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+	public Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response) {
 		/*Pega o token enviado no HEADER http*/
 		String token = request.getHeader(HEADER_STRING);
 
@@ -91,34 +89,38 @@ public class JWTTokenAuthenticationService {
 					 }
 				 
 			 	}
-			 } // fim da condicional do Token
-	} catch (io.jsonwebtoken.ExpiredJwtException e) {
-		try {
-			response.getOutputStream().println("Seu token esta expirado, faca login ou informe um token valido");
-	}	catch ( IOException el) {}
-
- 		}
-
- 			liberaçãoCors(response);
+			 }
+			 				
+			openCors(response);
 			return null; /*Não autorizado*/
-		};
+		}
 
 
 
-	private void liberaçãoCors(HttpServletResponse response) {
-		if (response.getHeader("Access-Control-Allow-Origin") == null){
+
+
+	private void openCors(HttpServletResponse response) {
+		if(response.getHeader("Access-Control-Allow-Origin") == null){
 			response.addHeader("Access-Control-Allow-Origin", "*");
-		};
+		}
 		if(response.getHeader("Access-Control-Allow-Headers") == null){
 			response.addHeader("Access-Control-Allow-Headers", "*");
-		};
+		}
 		if(response.getHeader("Access-Control-Request-Headers") == null){
 			response.addHeader("Access-Control-Request-Headers", "*");
-		};
+		}
 		if(response.getHeader("Access-Control-Allow-Methods") == null){
 			response.addHeader("Access-Control-Allow-Methods", "*");
-		};
-
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	}
 
 

@@ -1,5 +1,6 @@
 package pos.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -124,7 +125,7 @@ public class User implements UserDetails {
 
     /*são os acesso do usuário  	ROLE_ADMIN, ROLE_FUNCIONARIO...*/
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection getAuthorities() {
 
         return roles;
     }

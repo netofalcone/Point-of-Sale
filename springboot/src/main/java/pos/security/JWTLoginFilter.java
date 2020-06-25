@@ -20,37 +20,36 @@ import pos.model.User;
 
 
 /*Estabelece o gerenciado de Token*/
-public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter{
+public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-	/*configurando o gerenciador de autenticação*/
-	protected JWTLoginFilter(String url, AuthenticationManager authenticationManager) {
-		/*obriga a autenticar a URL*/
-		super(new AntPathRequestMatcher(url));		
-		/*Gerenciador de autenticação */		
-		setAuthenticationManager(authenticationManager);
-				
-	}
+    /*configurando o gerenciador de autenticação*/
+    protected JWTLoginFilter(String url, AuthenticationManager authenticationManager) {
+        /*obriga a autenticar a URL*/
+        super(new AntPathRequestMatcher(url));
+        /*Gerenciador de autenticação */
+        setAuthenticationManager(authenticationManager);
 
-	/*retona usuario ao processar a autenticação*/
-	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException, IOException, ServletException {
-		// Está pegando o token para validar
-		User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
-		/*Retorna o usuario login, senha e acessos*/
-		return getAuthenticationManager()
-				.authenticate(
-						new UsernamePasswordAuthenticationToken(
-								user.getUsername(), user.getPassword()));
-			}
-	
-	
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {	
-		new JWTTokenAuthenticationService().addAuthentication(response, authResult.getName());
-	}
-	
-	
+    }
+
+    /*retona usuario ao processar a autenticação*/
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException {
+        // Está pegando o token para validar
+        User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+        /*Retorna o usuario login, senha e acessos*/
+        return getAuthenticationManager()
+                .authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                user.getUsername(), user.getPassword()));
+    }
+
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+                                            Authentication authResult) throws IOException, ServletException {
+        new JWTTokenAuthenticationService().addAuthentication(response, authResult.getName());
+    }
+
 
 }

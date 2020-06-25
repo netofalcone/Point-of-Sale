@@ -14,56 +14,50 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import pos.service.UserService;
 
- /*Mapeia url, endereços, autoriza ou bloqueia acessos a URL
- 
+/*Mapeia url, endereços, autoriza ou bloqueia acessos a URL
+
  * */
 @Configuration
 @EnableWebSecurity
 public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserService userService;
-	
-	/*configura as solicitações de acesso por http*/
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {		
-	
-		/*ativando a proteção contra usuário que não estão válidados por token*/		
-		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())		
-		/* Ativando a permissão para acesso a pagina incial do sistema EX: www.sistema.com.br/		 */		
-		.disable().authorizeRequests().antMatchers("/").permitAll()
-		 .antMatchers("/index.html").permitAll()	
-		 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()		 
-		 /* URL DE LOGOUT - redireciona após o user deslogar do sistema */
-		 .anyRequest().authenticated().and().logout().logoutSuccessUrl("/index")		 
-		 /*Mapeia a URL de Logout e inválida o usuário*/
-		 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		
-						
-		
-		/*Filtra as requesições de login para autenticação*/		
-		.and().addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)		
-		/*Filtra demais requesições para verificar a presença do token http jwt no HEAD http*/
-		.addFilterBefore(new JWTApiAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-	}	
-	
-		
-	
-	
-	// AuthenticationManagerBuilder é o gerenciador de autenticaçaõ	
-	@Override
-		protected void configure(AuthenticationManagerBuilder auth) throws Exception {			
-		/*Serivce que irá consultar o usuário no banco de dados*/
-		auth.userDetailsService(userService)
-		/*padrão de codificação de senha */
-		.passwordEncoder(new BCryptPasswordEncoder());
-			
-		}
-	
-	
-	
-	
-	
+    @Autowired
+    private UserService userService;
+
+    /*configura as solicitações de acesso por http*/
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        /*ativando a proteção contra usuário que não estão válidados por token*/
+        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                /* Ativando a permissão para acesso a pagina incial do sistema EX: www.sistema.com.br/		 */
+                .disable().authorizeRequests().antMatchers("/").permitAll()
+                .antMatchers("/index.html").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                /* URL DE LOGOUT - redireciona após o user deslogar do sistema */
+                .anyRequest().authenticated().and().logout().logoutSuccessUrl("/index")
+                /*Mapeia a URL de Logout e inválida o usuário*/
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+
+
+                /*Filtra as requesições de login para autenticação*/
+                .and().addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                /*Filtra demais requesições para verificar a presença do token http jwt no HEAD http*/
+                .addFilterBefore(new JWTApiAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+
+    // AuthenticationManagerBuilder é o gerenciador de autenticaçaõ
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        /*Serivce que irá consultar o usuário no banco de dados*/
+        auth.userDetailsService(userService)
+                /*padrão de codificação de senha */
+                .passwordEncoder(new BCryptPasswordEncoder());
+
+    }
+
+
 }
 
 

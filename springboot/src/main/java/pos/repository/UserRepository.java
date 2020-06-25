@@ -8,11 +8,7 @@ import org.springframework.stereotype.Repository;
 import pos.model.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long>{
-	
-	
-	@Query("select user from User user where user.email = ?1")
-	User findUserbyEmail(String email);
-
-
+public interface UserRepository extends CrudRepository<User, Long> {
+    @Query("select user from User user where user.email = ?1")
+    User findUserbyEmail(String email);
 }

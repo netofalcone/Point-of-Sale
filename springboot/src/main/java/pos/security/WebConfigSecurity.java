@@ -43,14 +43,14 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 		
 		/*Filtra as requesições de login para autenticação*/		
 		.and().addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)		
-		/*Filtra demais requesições para verificar a presença do token http jwt no HEAD http*/
+		/*Filtra demais requesições para verificar a presença do token http JWT no HEAD HTTP*/
 		.addFilterBefore(new JWTApiAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}	
 	
 		
 	
 	
-	// AuthenticationManagerBuilder é o gerenciador de autenticaçaõ	
+	// AuthenticationManagerBuilder é o gerenciador de autenticação
 	@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {			
 		/*Serivce que irá consultar o usuário no banco de dados*/

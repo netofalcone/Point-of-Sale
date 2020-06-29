@@ -43,7 +43,7 @@ private Long id;
 	@Column(name = "name")
 	private String name;
 
-	@Column(unique=true) // permite apenas 1 item na coluna, evitando duplicidade.
+	@Column(name = "email", unique= true ) // permite apenas 1 item na coluna, evitando duplicidade
 	private String email;
 
 	@Column(name = "password")
@@ -55,12 +55,12 @@ private Long id;
 	@Column(name = "deleted")
 	private String deleted;
 
-@OneToMany(mappedBy ="user", orphanRemoval = true, cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
-private List<Phone> phones; //*
+	@OneToMany(mappedBy ="user", orphanRemoval = true, cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Phone> phones; //*
 
-@OneToMany(fetch = FetchType.EAGER ) /* sempre que carregar o usuário, vai carregar as roles dele que estão no BD*/
-@JoinTable(name = "users_role", uniqueConstraints = @UniqueConstraint ( 
-				columnNames = { "user_id", "role_id"}, name = "unique_role_user" ), /* colunas cridas automáticamente*/
+	@OneToMany(fetch = FetchType.EAGER ) /* sempre que carregar o usuário, vai carregar as roles dele que estão no BD*/
+	@JoinTable(name = "users_role", uniqueConstraints = @UniqueConstraint (
+				columnNames = { "user_id", "role_id"}, name = "unique_role_user" ), /* colunas criadas automáticamente*/
 				joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", table = "user", unique = false,
 				foreignKey = @ForeignKey (name = "user_fk", value = ConstraintMode.CONSTRAINT)),
 				
@@ -135,7 +135,6 @@ public boolean equals(Object obj) {
 /*são os acesso do usuário  	ROLE_ADMIN, ROLE_FUNCIONARIO...*/
 @Override
 public Collection getAuthorities() {
-
 	return roles;
 }
 

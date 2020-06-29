@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity(name ="role")
-@SequenceGenerator(name = "seq_role", sequenceName = "seq_role", allocationSize = 1, initialValue = 1)
 public class Role implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,6 +25,15 @@ public class Role implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "role_permission", joinColumns = @JoinColumn(name = "id_role"), inverseJoinColumns = @JoinColumn(name = "id_permission"))
 	private Set<Permission> permissions;
+
+	public Role() {
+	}
+
+	public Role(Integer id, String name, String description) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;

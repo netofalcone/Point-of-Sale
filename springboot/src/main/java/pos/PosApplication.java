@@ -23,20 +23,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @RestController
 @EnableCaching
-public class PosApplication implements WebMvcConfigurer {
+public class PosApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PosApplication.class, args);
 	System.out.println(new BCryptPasswordEncoder().encode("123"));
 	}
-	
-	/*Mapeamento global que refletem em todo o sistema*/	
-	@CrossOrigin
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {		
-		registry.addMapping("/user/")
-		.allowedMethods("*")
-		.allowedOrigins("*");
-	}
-
 }

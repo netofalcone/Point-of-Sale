@@ -25,80 +25,44 @@ import pos.model.User;
 import pos.repository.UserRepository;
 import pos.service.UserService;
 
-@CrossOrigin(origins = "")
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private UserService userService;
 
+    @Autowired
+    public UserController (UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping(value = "/", produces = "Application/json")
-    @CacheEvict(value = "cacheUserEvict", allEntries = true)
-    @CachePut(value = "cacheUserPut")
-    public ResponseEntity<List<User>> users() throws InterruptedException {
-        List<User> users = userService.users();
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+    public ResponseEntity<List<User>> list() {
+        List<User> users = userService.get();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    // EXEMPLO DE VERSIONAMENTO DE API, PODE TAMBÉM COLOCAR DIRETO NO REQUESTMAPPING
     @GetMapping(value = "v1/{idUser}", produces = "Application/json")
-    @CacheEvict(value = "cacheUserEvict", allEntries = true)
-    @CachePut(value = "cacheUserPut")
-    public ResponseEntity<User> indexV1(@PathVariable(value = "idUser") Long id) {
-        System.out.println(" CHAMANDO VERSÃO 1 de buscar user por id.");
-        Optional<User> user = userService.userWithId(id);
-        return new ResponseEntity<User>(user.get(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "v2/{idUser}", produces = "Application/json")
-    public ResponseEntity<User> indexV2(@PathVariable(value = "idUser") Long id) {
-        System.out.println(" CHAMANDO VERSÃO 2  de buscar user por id.");
-        Optional<User> user = userService.userWithId(id);
-        return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+    public ResponseEntity<User> findById(@PathVariable(value = "idUser") Long id) {
+        Optional<User> user = userService.findById(id);
+        return new ResponseEntity<>(user.get(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/", produces = "Application/json")
-    public ResponseEntity<User> store(@RequestBody User user) {
-        for (int phone = 0; phone < user.getPhones().size(); phone++) {
-            user.getPhones().get(phone).setUser(user);
-        }
-
-        String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-        user.setPassword(passwordCrypted);
-
-        System.out.println("senha foi criptografada: ");
-
-        User userSalved = userService.storeUser(user);
-        return new ResponseEntity<User>(userSalved, HttpStatus.CREATED);
-
+    public ResponseEntity<User> create(@RequestBody User user) throws Exception {
+        User userSalved = userService.create(user);
+        return new ResponseEntity<>(userSalved, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/", produces = "Application/json")
-    public ResponseEntity<User> update(@RequestBody User user) {
-
-        for (int phone = 0; phone < user.getPhones().size(); phone++) {
-            user.getPhones().get(phone).setUser(user);
-        }
-
-        /*Se as senhas diferentes forem diferentes, encripta a nova e manda atualizar*/
-        User userTemporary = userRepository.findUserbyEmail(user.getEmail());
-        if (!userTemporary.getPassword().equals(user.getPassword())) {
-
-            String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-            user.setPassword(passwordCrypted);
-        }
-
+    public ResponseEntity<User> update(@RequestBody User user) throws Exception {
         User userUpdate = userService.updateUser(user);
-        return new ResponseEntity<User>(userUpdate, HttpStatus.OK);
-
+        return new ResponseEntity<>(userUpdate, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{idUser}", produces = "Application/text")
-    public String delete(@PathVariable(value = "idUser") Long id) {
+    public ResponseEntity<?> delete(@PathVariable(value = "idUser") Long id) {
         userService.deleteUser(id);
-        return "User Deleted";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

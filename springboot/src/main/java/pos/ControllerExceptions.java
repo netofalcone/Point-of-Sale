@@ -24,18 +24,18 @@ public class ControllerExceptions extends ResponseEntityExceptionHandler {
     // que essas classes são responsáveis por transmitir
     @ExceptionHandler({Exception.class, RuntimeException.class, Throwable.class})
     @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
+    protected ResponseEntity<Object> handleExceptionInternal(Exception exception, Object body, HttpHeaders headers,
                                                              HttpStatus status, WebRequest request) {
 
         String msg = "  ";
-        if ( ex instanceof MethodArgumentNotValidException) {
-            List<org.springframework.validation.ObjectError> list = ((MethodArgumentNotValidException) ex).getBindingResult().getAllErrors();
+        if ( exception instanceof MethodArgumentNotValidException) {
+            List<org.springframework.validation.ObjectError> list = ((MethodArgumentNotValidException) exception).getBindingResult().getAllErrors();
 
             for (org.springframework.validation.ObjectError objectError : list) {
                 msg += objectError.getDefaultMessage() + "\n";
                   }
         } else {
-            msg = ex.getMessage();
+            msg = exception.getMessage();
         }
 
         ObjError objError = new ObjError();
@@ -47,33 +47,30 @@ public class ControllerExceptions extends ResponseEntityExceptionHandler {
 
 
 
-
-
-
     /* Mapeando da maioria dos erros a nivel de Banco de dados*/
     @ExceptionHandler({ DataIntegrityViolationException.class,
                         ConstraintViolationException.class,
                         PSQLException.class,
                         SQLException.class })
-    protected ResponseEntity<Object> handleExceptionDataIntegraty(Exception ex) {
+    protected ResponseEntity<Object> handleExceptionDataIntegraty(Exception exception) {
 
         String msg = " ";
 
-        if (ex instanceof DataIntegrityViolationException){
-            msg = ((DataIntegrityViolationException) ex).getCause().getCause().getMessage();
+        if (exception instanceof DataIntegrityViolationException){
+            msg = ((DataIntegrityViolationException) exception).getCause().getCause().getMessage();
         }
-        else if (ex instanceof ConstraintViolationException){
-            msg = ((ConstraintViolationException) ex).getCause().getCause().getMessage();
+        else if (exception instanceof ConstraintViolationException){
+            msg = ((ConstraintViolationException) exception).getCause().getCause().getMessage();
 
-        } else if (ex instanceof PSQLException){
-            msg = ((PSQLException) ex).getCause().getCause().getMessage();
+        } else if (exception instanceof PSQLException){
+            msg = ((PSQLException) exception).getCause().getCause().getMessage();
 
-        } else if (ex instanceof SQLException){
-            msg = ((SQLException) ex).getCause().getCause().getMessage();
+        } else if (exception instanceof SQLException){
+            msg = ((SQLException) exception).getCause().getCause().getMessage();
 
         }
         else {
-            msg = ex.getMessage(); // #Outras mensagengs de erros
+            msg = exception.getMessage(); // #Outras mensagengs de erros
         }
 
 
@@ -83,7 +80,5 @@ public class ControllerExceptions extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(objError, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-
-
 
 }

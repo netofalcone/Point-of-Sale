@@ -21,7 +21,7 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 		
-		public List<User> ListUsers() {
+		public List<User> listUsers() {
 				List<User> users =  (List<User>) userRepository.findAll();		
 				return users;
  		}

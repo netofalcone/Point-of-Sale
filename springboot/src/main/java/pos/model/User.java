@@ -1,7 +1,5 @@
 package pos.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,34 +16,40 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
+	@Entity
+	public class User implements UserDetails {
 
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private Long id;
 
-@Entity	
-public class User implements UserDetails {
-
-private static final long serialVersionUID = 1L;
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-@Column(name = "id")
-private Long id;
-
+	@NotBlank
+	@NotNull
 	@Column(name = "cpf")
 	private String cpf;
 
+	@NotBlank
+	@NotNull
 	@Column(name = "name")
 	private String name;
 
+	@NotBlank
+	@NotNull
 	@Column(name = "email", unique= true ) // permite apenas 1 item na coluna, evitando duplicidade
 	private String email;
 
+	@NotBlank
+	@NotNull
 	@Column(name = "password")
 	private String password;
 

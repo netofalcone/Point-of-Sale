@@ -6,7 +6,6 @@ public class ObjError {
     private String code;
 
 
-
     public String getError() {
         return error;
     }

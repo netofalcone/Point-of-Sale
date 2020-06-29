@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import io.jsonwebtoken.*;
-import org.springframework.beans.BeansException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -24,7 +23,7 @@ public class JWTTokenAuthenticationService {
 
     /*Tempo de validade do token, 2 DIAS*/
     private static final long EXPIRATION_TIME = 172800000;
-    /*SENHA UNICA PARA COMPOR A AUTENTICAÇÃO*/
+    /*Senha única para compor a autenticação*/
     private static final String SECRET = "SenhaForte";
     /* Prefixo padrão de Token*/
     private static final String TOKEN_PREFIX = "Bearer";
@@ -83,7 +82,6 @@ public class JWTTokenAuthenticationService {
                 }
 
             }
-
 
         }
         openCors(response);

@@ -1,7 +1,8 @@
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
-
+import { UserEditComponent } from '../user-edit/user-edit.component';
 
 @Component({
   selector: 'app-user-list',
@@ -11,7 +12,7 @@ import { UserService } from '../user.service';
 export class UserListComponent implements OnInit {
   users: any;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, public dialog: MatDialog) {
     this.userService.getUsers().subscribe(result => {
       this.users = result;
     });
@@ -23,7 +24,7 @@ export class UserListComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  public newUser(): void {
-    this.router.navigate(['users/create']);
+  openDialog(){
+    this.dialog.open(UserEditComponent);
   }
 }

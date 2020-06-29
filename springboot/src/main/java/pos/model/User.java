@@ -49,9 +49,6 @@ private Long id;
 	@Column(name = "password")
 	private String password;
 
-	@Column(name = "function")
-	private String function;
-
 	@Column(name = "deleted")
 	private String deleted;
 

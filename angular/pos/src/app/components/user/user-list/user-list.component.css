@@ -1,9 +1,11 @@
 #user-list{
-  position: absolute;
-  top: 38%;
-  left: 50%;
-  transform: translateY(-38%) translateX(-50%);
+  margin: 0 auto;
+  margin-top: 3%;
   width: 70%;
+}
+#div-table{
+  height: 300px;
+  overflow-y: auto;
 }
 table{
   background-color: #FFFFFF;
@@ -29,4 +31,22 @@ table{
 }
 input, select{
   border: none;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  -webkit-border-radius: 10px;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: #ffffff;
+  -webkit-border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  height: 3px;
+  background-color: rgba(216, 216, 216, 0.897);
+  -webkit-border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:vertical:hover {
+  background-color:#cccccc;
 }

@@ -25,7 +25,6 @@ import static java.util.Collections.emptyList;
 @Component
 public class JWTTokenAuthenticationService {
 
-
     private static final long EXPIRATION_TIME = 172800000;
     private static final String SECRET = "SenhaForte";
     private static final String TOKEN_PREFIX = "Bearer";
@@ -40,7 +39,6 @@ public class JWTTokenAuthenticationService {
                 .signWith(SignatureAlgorithm.HS512, SECRET).compact();
 
         dto.setToken(jwt);
-
         return dto;
     }
 
@@ -63,9 +61,7 @@ public class JWTTokenAuthenticationService {
 
     public Authentication getRefreshAuthentication(HttpServletRequest request) {
         String refreshToken;
-        try {
-            refreshToken =
-        }
 
+        return null;
     }
 }

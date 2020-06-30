@@ -3,15 +3,11 @@ package pos.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.postgresql.shaded.com.ongres.scram.common.util.CryptoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import pos.core.util.CryptoUtil;
 import pos.model.User;
 import pos.repository.UserRepository;
 
@@ -44,6 +40,7 @@ public class UserService {
 
     public User create(User user) throws Exception {
         if (validateInsert(user)) {
+            user.setPassword(CryptoUtil.hash(user.getPassword()));
             return userRepository.save(user);
         } else {
             throw new Exception();
@@ -86,6 +83,6 @@ public class UserService {
     }
 
     public User findByEmailAndPassword(String username, String password) {
-        return getUserRepository().findByEmailAndPassword(username, password);
+        return getUserRepository().findByEmailAndPassword(username.toUpperCase(), CryptoUtil.hash(password));
     }
 }

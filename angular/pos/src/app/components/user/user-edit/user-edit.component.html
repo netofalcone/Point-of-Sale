@@ -1,74 +1,87 @@
 <form [formGroup]="editForm" autocomplete="off" novalidate (ngSubmit)="onSubmit()" id="form-login">
-<div id="user-edit">
+  <div id="user-edit">
 
-  <div class="row m-0 mb-3">
-    <div class="col-12 m-0 p-0">
-      <h1>Cadastrar Usuário</h1>
+    <div class="row m-0 mb-3">
+      <div class="col-12 m-0 p-0">
+        <h1>Cadastrar Usuário</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-4">
+        <div class="form-group row">
+          <div class="col-12">
+            <label for="name">Nome</label>
+            <span style="color:red; font-size: 15px;"> *</span>
+            <input matInput type="text" class="form-control" formControlName="name" name="name" id="name"
+              placeholder="Digite o nome">
+            <app-error-message [control]="editForm.get('name')"></app-error-message>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4">
+        <div class="form-group row">
+          <label class="col-12">Cargo:<span style="color:red; font-size: 15px;"> *</span></label>
+          <div class="col-12">
+            <ng-select [items]="roles" bindLabel="name" bindValue="id" placeholder="Selecione o cargo"></ng-select>
+            <app-error-message [control]="editForm.get('role.id')"></app-error-message>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4">
+        <div class="form-group row">
+          <div class="col-12">
+            <label for="email">Email</label>
+            <span style="color:red; font-size: 15px;"> *</span>
+            <input matInput type="email" class="form-control" formControlName="email" name="email" id="email"
+              placeholder="Digite o Email">
+            <app-error-message [control]="editForm.get('email')"></app-error-message>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-4">
+        <div class="form-group row">
+          <div class="col-12">
+            <label for="password">Senha</label>
+            <span style="color:red; font-size: 15px;"> *</span>
+            <input matInput type="text" class="form-control" formControlName="password" name="password" id="password"
+              placeholder="Digite a Senha">
+            <app-error-message [control]="editForm.get('password')"></app-error-message>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4">
+        <div class="form-group row">
+          <div class="col-12">
+            <label for="cpf">CPF</label>
+            <span style="color:red; font-size: 15px;"> *</span>
+            <input matInput type="cpf" class="form-control" formControlName="cpf" name="cpf" id="cpf"
+              placeholder="Digite o CPF">
+            <app-error-message [control]="editForm.get('cpf')"></app-error-message>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4">
+        <div class="form-group row">
+          <div class="col-12">
+            <label for="phone">Telefone</label>
+            <span style="color:red; font-size: 15px;"> *</span>
+            <input matInput type="phone" class="form-control" formControlName="phone" name="phone" id="phone"
+              placeholder="Digite o Telefone">
+            <app-error-message [control]="editForm.get('phone')"></app-error-message>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div id="btns-action" class="text-right m-1">
+      <button type="button" id="btn-new-back" (click)="goToList()" class="btn btn-lg btn-primary">Voltar</button>
+      <button type="submit" id="btn-new-user" class="btn btn-lg btn-primary ml-4"
+        [disabled]="!editForm.valid">Cadastrar</button>
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-4">
-      <div class="form-group row">
-        <div class="col-12">
-          <label for="name">Nome</label>
-          <span style="color:red; font-size: 15px;"> *</span>
-          <input matInput type="text" class="form-control" formControlName="name" name="name" id="name" placeholder="Digite o nome">
-          <app-error-message [control]="editForm.get('name')"></app-error-message>
-        </div>
-
-      </div>
-      <div class="form-group row">
-        <div class="col-12">
-          <label for="password">Senha</label>
-          <span style="color:red; font-size: 15px;"> *</span>
-          <input matInput type="text" class="form-control" formControlName="password" name="password" id="password" placeholder="Digite a Senha">
-          <app-error-message [control]="editForm.get('password')"></app-error-message>
-        </div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="form-group row" formGroupName="role">
-        <label class="col-12">Cargo:<span style="color:red; font-size: 15px;"> *</span></label>
-        <div class="col-12">
-          <ng-select [items]="roles" bindLabel="name" formControlName="id" bindValue="id" placeholder="Selecione o cargo"></ng-select>
-          <app-error-message [control]="editForm.get('role.id')"></app-error-message>
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-12">
-          <label for="cpf">CPF</label>
-          <span style="color:red; font-size: 15px;"> *</span>
-          <input matInput type="cpf" class="form-control" formControlName="cpf" name="cpf" id="cpf" placeholder="Digite o CPF">
-          <app-error-message [control]="editForm.get('cpf')"></app-error-message>
-        </div>
-      </div>
-
-    </div>
-    <div class="col-4">
-      <div class="form-group row">
-        <div class="col-12">
-          <label for="email">Email</label>
-          <span style="color:red; font-size: 15px;"> *</span>
-          <input matInput type="email" class="form-control" formControlName="email" name="email" id="email" placeholder="Digite o Email">
-          <app-error-message [control]="editForm.get('email')"></app-error-message>
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-12">
-          <label for="phone">Telefone</label>
-          <span style="color:red; font-size: 15px;"> *</span>
-          <input matInput type="phone" class="form-control" formControlName="phone" name="phone" id="phone" placeholder="Digite o Telefone">
-          <app-error-message [control]="editForm.get('phone')"></app-error-message>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="text-right m-1">
-    <button type="button" id="btn-new-back" (click)="goToList()" class="btn btn-lg btn-primary">Voltar</button>
-    <button type="submit" id="btn-new-user" class="btn btn-lg btn-primary ml-4" [disabled]="!editForm.valid">Cadastrar</button>
-  </div>
-</div>
 </form>

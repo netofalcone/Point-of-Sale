@@ -1,0 +1,66 @@
+<div id="user-edit">
+
+  <div class="row m-0 mb-3">
+    <div class="col-12 m-0 p-0">
+      <h1>Cadastrar novo usuário</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <div class="form-group row">
+        <div class="col-12">
+          <label for="name">Nome</label>
+          <span style="color:red; font-size: 15px;"> *</span>
+          <input matInput type="text" class="form-control" name="name" id="name" placeholder="Digite o nome">
+        </div>
+
+      </div>
+      <div class="form-group row">
+        <div class="col-12">
+          <label for="password">Senha</label>
+          <span style="color:red; font-size: 15px;"> *</span>
+          <input matInput type="text" class="form-control" name="password" id="password" placeholder="Digite a Senha">
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group row">
+        <label class="col-12">Cargo:<span style="color:red; font-size: 15px;"> *</span></label>
+        <div class="col-12">
+          <ng-select [items]="roles" bindLabel="name" bindValue="id" placeholder="Selecione o cargo"></ng-select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-12">
+          <label for="cpf">CPF</label>
+          <span style="color:red; font-size: 15px;"> *</span>
+          <input matInput type="cpf" class="form-control" name="cpf" id="cpf" placeholder="Digite o CPF">
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4">
+      <div class="form-group row">
+        <div class="col-12">
+          <label for="email">Email</label>
+          <span style="color:red; font-size: 15px;"> *</span>
+          <input matInput type="email" class="form-control" name="email" id="email" placeholder="Digite o Email">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-12">
+          <label for="phone">Telefone</label>
+          <span style="color:red; font-size: 15px;"> *</span>
+          <input matInput type="phone" class="form-control" name="phone" id="phone" placeholder="Digite o Telefone">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="text-right" style="margin-top: 10px">
+    <button type="button" id="btn-new-back" (click)="goToList()" class="btn btn-lg btn-primary">Voltar</button>
+    <button type="button" id="btn-new-user" (click)="goToList()" class="btn btn-lg btn-primary ml-4">Cadastrar</button>
+  </div>
+</div>

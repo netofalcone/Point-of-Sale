@@ -5,7 +5,8 @@ import { UserListComponent } from './user-list/user-list.component';
 import { Routes, RouterModule } from '@angular/router';
 import {MatSelectModule} from '@angular/material/select';
 import { UserEditComponent } from './user-edit/user-edit.component';
-
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   {
     path: '',
@@ -20,7 +21,9 @@ const routes: Routes = [
     RouterModule,
     RouterModule.forChild(routes),
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    NgSelectModule,
+    FormsModule
   ]
 })
 export class UserModule { }

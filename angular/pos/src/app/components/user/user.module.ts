@@ -7,6 +7,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from "@angular/forms";
 const routes: Routes = [
   {
     path: '',
@@ -23,7 +24,8 @@ const routes: Routes = [
     MatSelectModule,
     MatDialogModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class UserModule { }

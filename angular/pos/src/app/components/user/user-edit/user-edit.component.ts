@@ -22,13 +22,14 @@ export class UserEditComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      id: new FormControl('', [Validators.required, Validators.email]),
-      name: new FormControl('', [Validators.required, Validators.email]),
+      id: new FormControl('', []),
+      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      phone: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      cpf: new FormControl('', [Validators.required]),
+      cpf: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       role: this.fb.group({
-        id: new FormControl('', [Validators.required, Validators.email])
+        id: new FormControl('', [Validators.required])
       })
     });
   }

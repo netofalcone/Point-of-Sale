@@ -16,7 +16,7 @@ export class UserService {
     return this.http.get(`${ AppConstants.baseURLServer}user/`);
   }
   createUser(user, dialog:MatDialog) {
-    return this.http.post(`${ AppConstants.baseURLServer}user/`, JSON.stringify(user)).subscribe(data => {
+    return this.http.post(`${ AppConstants.baseURLServer}user/`, user).subscribe(data => {
       this.toast.success('Cadastro realizado com sucesso.');
       this.goToList();
       dialog.closeAll();

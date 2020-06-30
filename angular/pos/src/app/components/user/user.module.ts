@@ -8,6 +8,8 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from "@angular/forms";
+import { SharedModule } from '../../shared/shared.module';
+
 const routes: Routes = [
   {
     path: '',
@@ -25,7 +27,8 @@ const routes: Routes = [
     MatDialogModule,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class UserModule { }

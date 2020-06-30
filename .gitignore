@@ -3,3 +3,4 @@
 .idea
 springboot/src/main/resources/application.properties
 
+.angulardoc.json

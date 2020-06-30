@@ -1,5 +1,6 @@
 package pos.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pos.core.util.CryptoUtil;
+import pos.dto.RoleDTO;
+import pos.dto.UserDTO;
 import pos.model.User;
 import pos.repository.UserRepository;
 
@@ -25,8 +28,13 @@ public class UserService {
         return this.userRepository;
     }
 
-    public List<User> get() {
-        return (List<User>) userRepository.findAll();
+    public List<UserDTO> get() {
+        List<User> users = (List<User>) userRepository.findAll();
+        List<UserDTO> usersDto = new ArrayList<>();
+        for (User u: users) {
+            usersDto.add(toUserDto(u));
+        }
+        return usersDto;
     }
 
     public User userEmail(String email) {
@@ -84,5 +92,23 @@ public class UserService {
 
     public User findByEmailAndPassword(String username, String password) {
         return getUserRepository().findByEmailAndPassword(username.toUpperCase(), CryptoUtil.hash(password));
+    }
+
+    public UserDTO toUserDto(User user) {
+        UserDTO userDTO = new UserDTO();
+        RoleDTO roleDTO = new RoleDTO();
+        userDTO.setId(user.getId());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setName(user.getName());
+        userDTO.setPhone(user.getPhone());
+
+        roleDTO.setId(user.getRole().getId());
+        roleDTO.setName(user.getRole().getName());
+        roleDTO.setDescription(user.getRole().getDescription());
+        roleDTO.setPermissions(user.getRole().getPermissions());
+
+        userDTO.setRole(roleDTO);
+
+        return userDTO;
     }
 }

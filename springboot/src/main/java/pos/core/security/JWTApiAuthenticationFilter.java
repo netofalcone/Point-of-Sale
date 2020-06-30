@@ -21,19 +21,13 @@ public class JWTApiAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         try {
-            HttpServletRequest req = (HttpServletRequest) request;
-            if (RequestMethod.OPTIONS.name().equalsIgnoreCase(req.getMethod())) {
-                res.addHeader("Access-Control-Allow-Origin", "*");
-                res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
-                res.setStatus(HttpServletResponse.SC_OK);
-                return;
-            }
             Authentication authentication = new JWTTokenAuthenticationService()
-                    .getAuthentication((HttpServletRequest) request, (HttpServletResponse) response);
+                    .getAuthentication(req, res);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            chain.doFilter(request, response);
+            chain.doFilter(req, res);
         }catch (JwtException e) {
             ((HttpServletResponse) response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }

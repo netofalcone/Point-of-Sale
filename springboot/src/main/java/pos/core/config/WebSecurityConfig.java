@@ -11,6 +11,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import pos.core.security.CORSOptionsFilter;
 import pos.core.security.JWTApiAuthenticationFilter;
 import pos.core.security.JWTLoginFilter;
 
@@ -27,10 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .anyRequest().authenticated().and().logout().logoutSuccessUrl("/index")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
-                .addFilterBefore(new JWTLoginFilter("/login"),
-                        UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTApiAuthenticationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new CORSOptionsFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTLoginFilter("/login"), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTApiAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
 

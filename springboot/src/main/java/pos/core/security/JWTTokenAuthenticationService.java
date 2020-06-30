@@ -22,7 +22,6 @@ import pos.dto.LoginDTO;
 import static java.util.Collections.emptyList;
 
 @Service
-@Component
 public class JWTTokenAuthenticationService {
 
     private static final long EXPIRATION_TIME = 172800000;

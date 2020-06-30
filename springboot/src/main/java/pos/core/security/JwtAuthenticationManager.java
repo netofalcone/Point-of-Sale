@@ -37,12 +37,12 @@ public class JwtAuthenticationManager implements AuthenticationManager {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         User user = this.getUserService().findByEmailAndPassword(authentication.getName(), (String) authentication.getCredentials());
         if(user != null) {
-            return new UsernamePasswordAuthenticationToken(toUserDTO(user), authentication.getCredentials());
+            return new UsernamePasswordAuthenticationToken(toLoginDTO(user), authentication.getCredentials());
         }
         throw new BadCredentialsException("User or password are invalid.");
     }
 
-    private LoginDTO toUserDTO (User user) {
+    private LoginDTO toLoginDTO (User user) {
         LoginDTO login = new LoginDTO();
         login.setId(user.getId());
         login.setName(user.getName());

@@ -15,7 +15,8 @@ export class LoginService {
 
   login(user) {
     return this.http.post(AppConstants.baseLogin, JSON.stringify(user)).subscribe(data => {
-      var token = JSON.parse(JSON.stringify(data)).Authorization.split(' ')[1];
+      console.log(JSON.parse(JSON.stringify(data)));
+      var token = JSON.parse(JSON.stringify(data)).Authorization;
       localStorage.setItem('token', token);
       this.goToHome();
     },

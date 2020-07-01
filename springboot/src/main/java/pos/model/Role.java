@@ -5,14 +5,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-
 @Entity(name ="role")
-@SequenceGenerator(name = "seq_role", sequenceName = "seq_role", allocationSize = 1, initialValue = 1)
 public class Role implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,18 +26,56 @@ public class Role implements Serializable {
 	@JoinTable(name = "role_permission", joinColumns = @JoinColumn(name = "id_role"), inverseJoinColumns = @JoinColumn(name = "id_permission"))
 	private Set<Permission> permissions;
 
-	public String getName() { return this.name; }
+	public Role() {
+	}
 
-	public String getDescription() { return this.description; }
+	public Role(Integer id, String name, String description) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
 
-	public boolean isDeleted() { return this.deleted; }
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
 
-	public void setDeleted(boolean deleted) { this.deleted = deleted; }
+	public Integer getId() {
+		return id;
+	}
 
-	public Integer getId() { return this.id; }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-	public Set<Permission> getPermissions() { return this.permissions; }
+	public String getName() {
+		return name;
+	}
 
-	public void setPermissions(Set<Permission> permissions) { this.permissions = permissions; }
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public Set<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Set<Permission> permissions) {
+		this.permissions = permissions;
+	}
 }

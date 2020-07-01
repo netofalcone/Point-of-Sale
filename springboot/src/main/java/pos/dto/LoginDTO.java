@@ -15,6 +15,8 @@ public class LoginDTO {
 
     private String token;
 
+    private String refreshToken;
+
     private List<String> permissions;
 
     public LoginDTO() {
@@ -77,5 +79,13 @@ public class LoginDTO {
 
     public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

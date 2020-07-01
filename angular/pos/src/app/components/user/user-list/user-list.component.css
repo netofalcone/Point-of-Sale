@@ -3,13 +3,15 @@
   margin-top: 3%;
   width: 70%;
 }
+#main-table{
+  width: 100%;
+}
 #div-table{
-  max-height: 300px;
+  max-height: 60%;
   overflow-y: auto;
 }
 table{
   background-color: #FFFFFF;
-  border-radius: 10px;
 }
 #btn-new-user{
   background-color: #3f51b5;
@@ -21,10 +23,10 @@ table{
   color: #3f51b5;
 }
 #name{
-  width: 550px;
+  width: 50%;
 }
 #actions{
-  width: 100px;
+  width: 10%;
 }
 .material-icons{
   cursor: pointer;

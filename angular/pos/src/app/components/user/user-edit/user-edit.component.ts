@@ -27,6 +27,7 @@ export class UserEditComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       phone: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
+      passwordConfirm: new FormControl('', [Validators.required]),
       cpf: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       role: this.fb.group({
         id: new FormControl('', [Validators.required])
@@ -34,9 +35,7 @@ export class UserEditComponent implements OnInit {
     });
   }
   onSubmit(){
-    /* TODO */
-    /* Devem criar telefones ao cadastrar o usuário. */
-    /* TODO */
+    this.editForm.removeControl('passwordConfirm');
     this.userService.createUser(this.editForm.value, this.dialog);
   }
 }

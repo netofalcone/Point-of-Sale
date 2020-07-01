@@ -1,26 +1,24 @@
 #home{
   width: 100%;
-  padding: 100px;
+  height: 100%;
+  padding: 0%;
 }
 .row{
   margin: 0;
-  padding: 0px;
+  padding: 0;
 }
 .col-6, .col-12{
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 #addProdut{
-  width: 100%;
-  height: 450px;
+
 }
 #tools{
-  width: 100%;
-  height: 450px;
+
 }
 #listSale{
-  width: 100%;
-  height: 900px;
+
 }
 .material-icons{
   font-size: 7em;

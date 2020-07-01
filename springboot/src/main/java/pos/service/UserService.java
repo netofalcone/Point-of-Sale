@@ -46,9 +46,8 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public Optional<User> findById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        return user;
+    public User findById(Integer id) {
+        return userRepository.findUserById(id);
     }
 
     public User create(User user) throws Exception {
@@ -87,7 +86,6 @@ public class UserService {
 
     public void delete(Long id) {
         userRepository.deleteById(id);
-        return;
     }
 
     public User findUserbyEmail(String email) {

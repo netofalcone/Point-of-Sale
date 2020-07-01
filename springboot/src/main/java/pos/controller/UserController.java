@@ -36,25 +36,25 @@ public class UserController {
 
     @GetMapping(value = "", produces = "Application/json")
     public ResponseEntity<List<UserDTO>> list() {
-        List<UserDTO> users = userService.get();
+        List<UserDTO> users = getService().get();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}", produces = "Application/json")
-    public ResponseEntity<User> findById(@PathVariable(value = "id") Long id) {
-        Optional<User> user = userService.findById(id);
-        return new ResponseEntity<>(user.get(), HttpStatus.OK);
+    public ResponseEntity<User> findById(@PathVariable(value = "id") Integer id) {
+        User user = getService().findById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping(value = "", produces = "Application/json")
     public ResponseEntity<User> create(@RequestBody UserDTO userDTO) throws Exception {
-        User userSalved = userService.create(getService().toUserModel(userDTO));
+        User userSalved = getService().create(getService().toUserModel(userDTO));
         return new ResponseEntity<>(userSalved, HttpStatus.CREATED);
     }
 
 /*    @PutMapping(value = "/", produces = "Application/json")
     public ResponseEntity<User> update(@RequestBody User user) throws Exception {
-        User userUpdate = userService.updateUser(user);
+        User userUpdate = getService().update(user);
         return new ResponseEntity<>(userUpdate, HttpStatus.OK);
     }
 

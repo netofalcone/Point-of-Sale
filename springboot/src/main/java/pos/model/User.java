@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity(name = "User")
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -23,6 +22,12 @@ public class User implements Serializable {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "cpf")
+    private String cpf;
+
+    @Column(name = "deleted")
+    private boolean deleted;
 
     @ManyToOne
     private Role role;
@@ -73,6 +78,22 @@ public class User implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Role getRole() {

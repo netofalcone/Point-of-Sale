@@ -34,25 +34,25 @@ public class UserController {
         return this.userService;
     }
 
-    @GetMapping(value = "/", produces = "Application/json")
+    @GetMapping(value = "", produces = "Application/json")
     public ResponseEntity<List<UserDTO>> list() {
         List<UserDTO> users = userService.get();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-/*    @GetMapping(value = "v1/{idUser}", produces = "Application/json")
-    public ResponseEntity<User> findById(@PathVariable(value = "idUser") Long id) {
+    @GetMapping(value = "/{id}", produces = "Application/json")
+    public ResponseEntity<User> findById(@PathVariable(value = "id") Long id) {
         Optional<User> user = userService.findById(id);
         return new ResponseEntity<>(user.get(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/", produces = "Application/json")
-    public ResponseEntity<User> create(@RequestBody User user) throws Exception {
-        User userSalved = userService.create(user);
+    @PostMapping(value = "", produces = "Application/json")
+    public ResponseEntity<User> create(@RequestBody UserDTO userDTO) throws Exception {
+        User userSalved = userService.create(getService().toUserModel(userDTO));
         return new ResponseEntity<>(userSalved, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/", produces = "Application/json")
+/*    @PutMapping(value = "/", produces = "Application/json")
     public ResponseEntity<User> update(@RequestBody User user) throws Exception {
         User userUpdate = userService.updateUser(user);
         return new ResponseEntity<>(userUpdate, HttpStatus.OK);

@@ -12,6 +12,10 @@ public class UserDTO {
 
     private String phone;
 
+    private String cpf;
+
+    private String newPassword;
+
     private RoleDTO role;
 
     public UserDTO() {
@@ -47,6 +51,22 @@ public class UserDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
     public RoleDTO getRole() {

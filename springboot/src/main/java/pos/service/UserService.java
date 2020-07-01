@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import pos.core.util.CryptoUtil;
 import pos.dto.RoleDTO;
 import pos.dto.UserDTO;
+import pos.model.Role;
 import pos.model.User;
 import pos.repository.UserRepository;
 
@@ -18,15 +19,19 @@ import pos.repository.UserRepository;
 public class UserService {
 
     private UserRepository userRepository;
+    private RoleService roleService;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleService roleService) {
         this.userRepository = userRepository;
+        this.roleService = roleService;
     }
 
-    public UserRepository getUserRepository() {
+    public UserRepository getRepository() {
         return this.userRepository;
     }
+
+    public RoleService getRoleService() { return this.roleService;}
 
     public List<UserDTO> get() {
         List<User> users = (List<User>) userRepository.findAll();
@@ -47,22 +52,21 @@ public class UserService {
     }
 
     public User create(User user) throws Exception {
-        if (validateInsert(user)) {
+        if (validateCreate(user)) {
             user.setPassword(CryptoUtil.hash(user.getPassword()));
+            user.setEmail(user.getEmail().toLowerCase());
             return userRepository.save(user);
         } else {
             throw new Exception();
         }
     }
 
-    private boolean validateInsert(User user) {
-        String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-        user.setPassword(passwordCrypted);
+    private boolean validateCreate(User user) {
 
-        return false;
+        return true;
     }
 
-    public User updateUser(User user) throws Exception {
+    public User update(User user) throws Exception {
         if (this.validateUpdate(user)) {
             return userRepository.save(user);
         } else {
@@ -81,34 +85,43 @@ public class UserService {
         return false;
     }
 
-    public void deleteUser(Long id) {
+    public void delete(Long id) {
         userRepository.deleteById(id);
         return;
     }
 
     public User findUserbyEmail(String email) {
-        return null;
+        return getRepository().findByEmail(email);
     }
 
     public User findByEmailAndPassword(String username, String password) {
-        return getUserRepository().findByEmailAndPassword(username.toUpperCase(), CryptoUtil.hash(password));
+        return getRepository().findByEmailAndPassword(username.toLowerCase(), CryptoUtil.hash(password));
+    }
+
+    public User toUserModel(UserDTO userDTO) {
+        User user = new User();
+        Role role = getRoleService().getRoleById(userDTO.getRole().getId());
+        user.setId(userDTO.getId());
+        user.setEmail(userDTO.getEmail());
+        user.setCpf(userDTO.getCpf());
+        user.setName(userDTO.getName());
+        user.setPhone(userDTO.getPhone());
+        user.setPassword(userDTO.getNewPassword());
+
+        user.setRole(role);
+        return user;
     }
 
     public UserDTO toUserDto(User user) {
         UserDTO userDTO = new UserDTO();
-        RoleDTO roleDTO = new RoleDTO();
+        Role role = getRoleService().getRoleById(user.getRole().getId());
+        RoleDTO roleDTO = getRoleService().toRoleDTO(role);
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
         userDTO.setName(user.getName());
         userDTO.setPhone(user.getPhone());
 
-        roleDTO.setId(user.getRole().getId());
-        roleDTO.setName(user.getRole().getName());
-        roleDTO.setDescription(user.getRole().getDescription());
-        roleDTO.setPermissions(user.getRole().getPermissions());
-
         userDTO.setRole(roleDTO);
-
         return userDTO;
     }
 }

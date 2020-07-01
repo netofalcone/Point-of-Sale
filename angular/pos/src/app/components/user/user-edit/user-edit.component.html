@@ -23,8 +23,8 @@
         <div class="form-group row">
           <label class="col-12">Cargo:<span class="validationRequired"> *</span></label>
           <div class="col-12">
-            <ng-select [items]="roles" bindLabel="name" bindValue="id" placeholder="Selecione o cargo"></ng-select>
-            <app-error-message [control]="editForm.get('role.id')"></app-error-message>
+            <ng-select [items]="roles" bindLabel="name" formControlName="role" placeholder="Selecione o cargo"></ng-select>
+            <app-error-message [control]="editForm.get('role')"></app-error-message>
           </div>
         </div>
       </div>
@@ -46,9 +46,9 @@
           <div class="col-12">
             <label for="password">Senha</label>
             <span class="validationRequired"> *</span>
-            <input matInput type="text" class="form-control" formControlName="password" name="password" id="password"
+            <input matInput type="text" class="form-control" formControlName="newPassword" name="password" id="password"
               placeholder="Digite a Senha">
-            <app-error-message [control]="editForm.get('password')"></app-error-message>
+            <app-error-message [control]="editForm.get('newPassword')"></app-error-message>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@
             <span class="validationRequired"> *</span>
             <input matInput type="text" class="form-control" formControlName="passwordConfirm" name="passwordConfirm" id="passwordConfirm"
               placeholder="Insira a senha novamente">
-            <app-error-message [control]="editForm.get('password')"></app-error-message>
+            <app-error-message [control]="editForm.get('passwordConfirm')"></app-error-message>
           </div>
         </div>
       </div>

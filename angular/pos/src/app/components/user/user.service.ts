@@ -13,10 +13,11 @@ export class UserService {
   constructor(private http: HttpClient, private router:Router, private toast: ToastrService) { }
 
   getUsers() {
-    return this.http.get(`${ AppConstants.baseURLServer}user/`);
+    console.log()
+    return this.http.get(AppConstants.baseUsers);
   }
   createUser(user, dialog:MatDialog) {
-    return this.http.post(`${ AppConstants.baseURLServer}user/`, user).subscribe(data => {
+    return this.http.post(AppConstants.baseUsers, user).subscribe(data => {
       this.toast.success('Cadastro realizado com sucesso.');
       this.goToList();
       dialog.closeAll();

@@ -14,6 +14,7 @@ import { HeaderComponent } from './template/header/header.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { SharedModule } from './shared/shared.module';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SharedModule } from './shared/shared.module';
     ToastrModule.forRoot(),
     MatToolbarModule,
     MatFormFieldModule,
-    SharedModule
+    SharedModule,
+    TextMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]

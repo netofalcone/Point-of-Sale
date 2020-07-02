@@ -9,6 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from '../../shared/shared.module';
+import {TextMaskModule} from "angular2-text-mask";
 
 const routes: Routes = [
   {
@@ -19,16 +20,17 @@ const routes: Routes = [
 @NgModule({
   declarations: [UserListComponent, UserEditComponent],
   entryComponents:[UserEditComponent],
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterModule.forChild(routes),
-    MatSelectModule,
-    MatDialogModule,
-    NgSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        RouterModule.forChild(routes),
+        MatSelectModule,
+        MatDialogModule,
+        NgSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule,
+        TextMaskModule
+    ]
 })
 export class UserModule { }

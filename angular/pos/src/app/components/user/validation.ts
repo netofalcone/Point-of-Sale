@@ -1,5 +1,5 @@
-import { FormControl, FormGroup } from '@angular/forms';
-import {isCPF } from 'brazilian-values';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { isCPF, isPhone } from 'brazilian-values';
 export class Validation {
 
   static equalsTO(field: string) {
@@ -7,16 +7,11 @@ export class Validation {
       if (!formControl.root || !(formControl.root as FormGroup).controls) {
         return null;
       }
-      if (field == null) {throw new Error('É preciso inserir o campo e sua confirmação.'); }
+      if (field == null) { throw new Error('É preciso inserir o campo e sua confirmação.'); }
       const fieldConfirmation = (formControl.root as FormGroup).get(field);
-      if (!fieldConfirmation) {throw new Error('É preciso inserir o campo e sua confirmação.'); }
+      if (!fieldConfirmation) { throw new Error('É preciso inserir o campo e sua confirmação.'); }
       if (fieldConfirmation.value !== formControl.value) {
         return { fieldsDoNotMatch: field };
-      } else {
-        formControl.markAsTouched();
-        formControl.markAsUntouched();
-        fieldConfirmation.markAsTouched();
-        fieldConfirmation.markAsUntouched();
       }
       return null;
     };
@@ -25,15 +20,37 @@ export class Validation {
   static validateCpf() {
     return (formControl: FormControl) => {
       const cpf = formControl.value;
-      if (!isCPF(cpf)) {return { invalidCPF: cpf }; }
+      if (!isCPF(cpf)) { return { invalidCPF: cpf }; }
       return null;
     };
   }
   static validateFieldName() {
     return (formControl: FormControl) => {
-        const regexTest = /[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/.test(formControl.value);
+      for (const iterator of formControl.value) {
+        const regexTest = /[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/.test(iterator);
         if (regexTest === false) {
-          return { invalidFieldName: formControl.value }; }
+          return { invalidFieldName: formControl.value };
+        }
+      }
+    }
+  }
+  static validateIsPhone() {
+    return (formControl: FormControl) => {
+      if (!isPhone(formControl.value) && formControl.value !== undefined) {
+        console.log('Entrou 2')
+        return { invalidFieldPhone: formControl.value };
+      }
     };
   }
+  static validateFieldPassword() {
+    return (formControl: FormControl) => {
+      const regexTest = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@!#]{8,}$/.test(formControl.value);
+      if (regexTest === false) {
+        return { invalidFieldPassword: formControl.value };
+      }
+    }
+
+  }
+
 }
+

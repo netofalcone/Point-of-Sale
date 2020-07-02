@@ -14,7 +14,11 @@ import { HeaderComponent } from './template/header/header.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { SharedModule } from './shared/shared.module';
-import { TextMaskModule } from 'angular2-text-mask';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 @NgModule({
   declarations: [
@@ -34,7 +38,7 @@ import { TextMaskModule } from 'angular2-text-mask';
     MatToolbarModule,
     MatFormFieldModule,
     SharedModule,
-    TextMaskModule
+    NgxMaskModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

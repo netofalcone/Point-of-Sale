@@ -1,97 +1,125 @@
 package pos.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import pos.core.util.CryptoUtil;
+import pos.dto.RoleDTO;
+import pos.dto.UserDTO;
+import pos.model.Role;
 import pos.model.User;
 import pos.repository.UserRepository;
 
 @Service
-public class UserService implements UserDetailsService {
-	
-	@Autowired
-	private UserRepository userRepository;
-		
-		public List<User> listUsers() {
-				List<User> users =  (List<User>) userRepository.findAll();		
-				return users;
- 		}
-		
-		
-		public User userEmail(@PathVariable (value = "emailUser") String email) {			
-				return userRepository.findUserbyEmail(email);
-	 	}
-	
-		
-		
-		public Optional<User> userWithId(@PathVariable (value = "idUser") Long id) {			
-			   Optional<User> user =  userRepository.findById(id);		
-				return user;
-	 	}
-		
-		public User storeUser( @RequestBody User user) {
+public class UserService {
 
-			for (int phone = 0; phone < user.getPhones().size(); phone++) {
-				user.getPhones().get(phone).setUser(user);
-			}
+    private UserRepository userRepository;
+    private RoleService roleService;
 
-			String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-			user.setPassword(passwordCrypted);
-			return userRepository.save(user);
-		}
-		
-		public User updateUser( @RequestBody User user) {
-			for (int phone = 0; phone < user.getPhones().size(); phone++) {
-				user.getPhones().get(phone).setUser(user);
-			}
+    @Autowired
+    public UserService(UserRepository userRepository, RoleService roleService) {
+        this.userRepository = userRepository;
+        this.roleService = roleService;
+    }
 
-			/*Se as senhas forem diferentes, encripta a nova e manda atualizar */
-			User userVariableTemporary = userRepository.findUserbyEmail(user.getEmail());
-			if (!userVariableTemporary.getPassword().equals(user.getPassword())) {
+    public UserRepository getRepository() {
+        return this.userRepository;
+    }
 
-				String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-				user.setPassword(passwordCrypted);
-			}
+    public RoleService getRoleService() { return this.roleService;}
 
-			return userRepository.save(user);
-		}
-		
-		public void deleteUser( @PathVariable (value = "idUser") Long id 
-				) {
-			 userRepository.deleteById(id);
-			return ;			
-		}
-		
-		
-		//consultar usuario no banco
-		@Override
-		public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-						
-			User user = userRepository.findUserbyEmail(username);
-			
-			if (user == null) {
-				throw new UsernameNotFoundException("Usuário não encontrado");
-			}
-			// caso esteja correta, já retorna email, password e autorizações
-			// poderia retonar, apenas o user, mas retornando um new user, ele já retorna com alguns padrões 
-			// do propio framework com validações
-			return new org.springframework.security.core.userdetails.User(
-					user.getEmail(),
-					user.getPassword(),
-					user.getAuthorities());
-			//
-			}
+    public List<UserDTO> get() {
+        List<User> users = (List<User>) userRepository.findAll();
+        List<UserDTO> usersDto = new ArrayList<>();
+        for (User u: users) {
+            usersDto.add(toUserDto(u));
+        }
+        return usersDto;
+    }
 
+    public User userEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
-		
+    public User findById(Integer id) {
+        return userRepository.findUserById(id);
+    }
 
+    public User create(User user) throws Exception {
+        if (validateCreate(user)) {
+            user.setPassword(CryptoUtil.hash(user.getPassword()));
+            user.setEmail(user.getEmail().toLowerCase());
+            return userRepository.save(user);
+        } else {
+            throw new Exception();
+        }
+    }
+
+    private boolean validateCreate(User user) {
+
+        return true;
+    }
+
+    public User update(User user) throws Exception {
+        if (this.validateUpdate(user)) {
+            return userRepository.save(user);
+        } else {
+            throw new Exception();
+        }
+    }
+
+    private boolean validateUpdate(User user) {
+        User userTemporary = this.findUserbyEmail(user.getEmail());
+
+        if (!userTemporary.getPassword().equals(user.getPassword())) {
+            String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
+            user.setPassword(passwordCrypted);
+        }
+
+        return false;
+    }
+
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public User findUserbyEmail(String email) {
+        return getRepository().findByEmail(email);
+    }
+
+    public User findByEmailAndPassword(String username, String password) {
+        return getRepository().findByEmailAndPassword(username.toLowerCase(), CryptoUtil.hash(password));
+    }
+
+    public User toUserModel(UserDTO userDTO) {
+        User user = new User();
+        Role role = getRoleService().getRoleById(userDTO.getRole().getId());
+        user.setId(userDTO.getId());
+        user.setEmail(userDTO.getEmail());
+        user.setCpf(userDTO.getCpf());
+        user.setName(userDTO.getName());
+        user.setPhone(userDTO.getPhone());
+        user.setPassword(userDTO.getNewPassword());
+
+        user.setRole(role);
+        return user;
+    }
+
+    public UserDTO toUserDto(User user) {
+        UserDTO userDTO = new UserDTO();
+        Role role = getRoleService().getRoleById(user.getRole().getId());
+        RoleDTO roleDTO = getRoleService().toRoleDTO(role);
+        userDTO.setId(user.getId());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setName(user.getName());
+        userDTO.setPhone(user.getPhone());
+
+        userDTO.setRole(roleDTO);
+        return userDTO;
+    }
 }

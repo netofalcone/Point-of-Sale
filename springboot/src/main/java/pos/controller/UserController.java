@@ -4,11 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,57 +15,52 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pos.dto.UserDTO;
 import pos.model.User;
-
 import pos.service.UserService;
 
-
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping("users")
 public class UserController {
-	
 
-	@Autowired
-	private UserService userService;
+    private UserService userService;
 
+    @Autowired
+    public UserController (UserService userService) {
+        this.userService = userService;
+    }
 
-	@GetMapping(value = "", produces = "Application/json")
-	@CacheEvict(value="cacheUserEvict", allEntries= true ) // Remove do cache coisas que não estão sendo utilizadas
-	@CachePut(value="cacheUserPut") // Identifica atualizações no banco de dados, e atualiza o cache atual.
-	public ResponseEntity <List<User>>  users() throws InterruptedException {			
-		List<User> users =  userService.listUsers();
-		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
- 	 } 
-	
+    public UserService getService() {
+        return this.userService;
+    }
 
-	@GetMapping(value = "/{idUser}", produces = "Application/json")
-	@CacheEvict(value="cacheUserEvict", allEntries= true ) 
-	@CachePut(value="cacheUserPut") 
-	public ResponseEntity <User> index(@PathVariable (value = "idUser") Long id) {
-		Optional<User> user = userService.userWithId(id);
-		return new ResponseEntity<User>(user.get(), HttpStatus.OK);
-	 }
-			
+    @GetMapping(value = "", produces = "Application/json")
+    public ResponseEntity<List<UserDTO>> list() {
+        List<UserDTO> users = getService().get();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 
-	@PostMapping(value = "/", produces = "Application/json")
-	public ResponseEntity <User> store( @RequestBody User user) {
-		User userSalved = userService.storeUser(user);
-		return new ResponseEntity<User>(userSalved, HttpStatus.CREATED);
-	 }
+    @GetMapping(value = "/{id}", produces = "Application/json")
+    public ResponseEntity<User> findById(@PathVariable(value = "id") Integer id) {
+        User user = getService().findById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
+    @PostMapping(value = "", produces = "Application/json")
+    public ResponseEntity<User> create(@RequestBody UserDTO userDTO) throws Exception {
+        User userSalved = getService().create(getService().toUserModel(userDTO));
+        return new ResponseEntity<>(userSalved, HttpStatus.CREATED);
+    }
 
-	@PutMapping(value = "/", produces = "Application/json")
-	public ResponseEntity <User> update( @RequestBody User user) {
-		User userUpdate = userService.updateUser(user);	
-		return new ResponseEntity<User>(userUpdate, HttpStatus.OK);
-	}
+/*    @PutMapping(value = "/", produces = "Application/json")
+    public ResponseEntity<User> update(@RequestBody User user) throws Exception {
+        User userUpdate = getService().update(user);
+        return new ResponseEntity<>(userUpdate, HttpStatus.OK);
+    }
 
-
-	@DeleteMapping(value = "/{idUser}", produces = "Application/text")
-	public String delete ( @PathVariable (value = "idUser") Long id) {								
-		userService.deleteUser(id);
-		return "User Deleted";
-	}
-
-
+    @DeleteMapping(value = "/{idUser}", produces = "Application/text")
+    public ResponseEntity<?> delete(@PathVariable(value = "idUser") Long id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }*/
 }

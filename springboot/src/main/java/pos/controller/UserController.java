@@ -57,10 +57,10 @@ public class UserController {
         User userUpdate = getService().update(user);
         return new ResponseEntity<>(userUpdate, HttpStatus.OK);
     }
-
+*/
     @DeleteMapping(value = "/{idUser}", produces = "Application/text")
-    public ResponseEntity<?> delete(@PathVariable(value = "idUser") Long id) {
+    public ResponseEntity<?> delete(@PathVariable(value = "idUser") Integer id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }*/
+    }
 }

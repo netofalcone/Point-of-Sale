@@ -6,7 +6,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Entity(name = "User")
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+@Entity(name = "user")
+@SQLDelete(sql = "UPDATE public.user SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
+
 public class User implements Serializable {
 
     @Id

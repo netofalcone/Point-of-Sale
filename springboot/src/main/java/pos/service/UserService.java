@@ -122,4 +122,8 @@ public class UserService {
         userDTO.setRole(roleDTO);
         return userDTO;
     }
+
+	public void deleteUser(Integer id) {
+        getRepository().delete(getRepository().findUserById(id));;
+	}
 }

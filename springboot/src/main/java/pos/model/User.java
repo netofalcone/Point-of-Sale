@@ -3,6 +3,8 @@ package pos.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "User")
 public class User implements Serializable {
@@ -11,19 +13,25 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotNull
+    @NotBlank
     @Column(name = "name")
     private String name;
 
+    @NotNull
+    @NotBlank
     @Column(name = "email", unique = true)
     private String email;
 
+    @NotNull
+    @NotBlank
     @Column(name = "password")
     private String password;
 
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "cpf")
+    @Column(name = "cpf", unique = true)
     private String cpf;
 
     @Column(name = "deleted")

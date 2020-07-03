@@ -11,7 +11,9 @@ export class ValidationMessage {
       emptyField: `Valores vázios não são aceitos.`,
       invalidFieldName: `O nome não deve possuir numeros ou caracteres especiais`,
       invalidFieldPhone : `Formato de telefone inválido, são aceitos somente caracteres numéricos.`,
-      invalidFieldPassword: `Formato de senha inválido, deve conter ao menos um dígito, uma letra minúscula, uma letra maiúscula, um caractere especial.`
+      invalidFieldPassword: `Formato de senha inválido, deve conter ao menos um dígito,
+                              uma letra minúscula, uma letra maiúscula, um caractere especial.`,
+      invalidFieldEmail: `E-mail inválido.`
     };
     return errorMessage[validatorName];
   }

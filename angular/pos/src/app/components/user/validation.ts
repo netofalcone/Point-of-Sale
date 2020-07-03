@@ -27,7 +27,7 @@ export class Validation {
   static validateFieldName() {
     return (formControl: FormControl) => {
       for (const iterator of formControl.value) {
-        const regexTest = /[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/.test(iterator);
+        const regexTest = /^[A-zÀ-ú '´]+$/.test(iterator);
         if (regexTest === false) {
           return { invalidFieldName: formControl.value };
         }
@@ -37,7 +37,6 @@ export class Validation {
   static validateIsPhone() {
     return (formControl: FormControl) => {
       if (!isPhone(formControl.value) && formControl.value !== undefined) {
-        console.log('Entrou 2')
         return { invalidFieldPhone: formControl.value };
       }
     };
@@ -48,8 +47,15 @@ export class Validation {
       if (regexTest === false) {
         return { invalidFieldPassword: formControl.value };
       }
-    }
-
+    };
+  }
+  static validateFieldEmail() {
+    return (formControl: FormControl) => {
+      const regexTest = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i.test(formControl.value);
+      if (regexTest === false) {
+        return { invalidFieldEmail: formControl.value };
+      }
+    };
   }
 
 }

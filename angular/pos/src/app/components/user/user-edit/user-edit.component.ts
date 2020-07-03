@@ -25,7 +25,7 @@ export class UserEditComponent implements OnInit {
     this.editForm = this.fb.group({
       id: new FormControl('', []),
       name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(250), Validation.validateFieldName()]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email, Validation.validateFieldEmail()]),
       phone: new FormControl('', [Validation.validateIsPhone()]),
       cpf: new FormControl('', [Validators.required, Validators.maxLength(20), Validation.validateCpf()]),
       newPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validation.validateFieldPassword()]),

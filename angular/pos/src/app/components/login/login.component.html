@@ -6,7 +6,7 @@
     <div class="form-group row">
       <div class="col text-left">
         <label for="email">E-mail</label>
-        <span style="color:red; font-size: 15px;"> *</span>
+        <span class="validationRequired"> *</span>
         <input matInput type="email" class="form-control" formControlName="email" name="email" id="email"
           placeholder="Insira o seu email" required>
         <app-error-message [control]="formLogin.get('email')"></app-error-message>
@@ -17,8 +17,8 @@
     <div class="form-group row">
       <div class="col text-left">
         <label for="password">Senha</label>
-        <span style="color:red; font-size: 15px;"> *</span>
-        <input matInput type="password" class="form-control" formControlName="password" name="password" id="userPasword"
+        <span class="validationRequired"> *</span>
+        <input matInput type="password" class="form-control" formControlName="password" name="password" id="password"
           placeholder="Insira a sua senha" required>
           <app-error-message [control]="formLogin.get('password')"></app-error-message>
 

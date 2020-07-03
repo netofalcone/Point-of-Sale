@@ -15,9 +15,11 @@ export class ErrorMessageComponent implements OnInit {
   ngOnInit(): void { }
 
   get errorMessages() {
-    for (const error in this.control.errors) {
-      if (this.control.errors.hasOwnProperty(error) && this.control.touched) {
-        return ValidationMessage.getErrorMessage(error, this.control.errors[error]);
+    if(this.control != null){
+      for (const error in this.control.errors) {
+        if (this.control.errors.hasOwnProperty(error) && this.control.touched) {
+          return ValidationMessage.getErrorMessage(error, this.control.errors[error]);
+        }
       }
     }
     return null;

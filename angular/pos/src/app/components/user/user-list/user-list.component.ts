@@ -1,3 +1,4 @@
+import { ModalDeleteComponent } from './../modal-delete/modal-delete.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -26,5 +27,10 @@ export class UserListComponent implements OnInit {
 
   openDialog(){
     this.dialog.open(UserEditComponent);
+  }
+
+  openDeleteDialog(id: number){
+    this.userService.setUserDeleted(id);
+    this.dialog.open(ModalDeleteComponent);
   }
 }

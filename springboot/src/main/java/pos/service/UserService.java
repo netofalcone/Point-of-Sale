@@ -84,10 +84,6 @@ public class UserService {
         return false;
     }
 
-    public void delete(Long id) {
-        userRepository.deleteById(id);
-    }
-
     public User findUserbyEmail(String email) {
         return getRepository().findByEmail(email);
     }
@@ -122,4 +118,8 @@ public class UserService {
         userDTO.setRole(roleDTO);
         return userDTO;
     }
+
+	public void delete(Integer id) {
+        getRepository().delete(getRepository().findUserById(id));;
+	}
 }

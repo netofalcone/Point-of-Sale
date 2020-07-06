@@ -46,7 +46,7 @@
           <div class="col-12">
             <label for="password">Senha</label>
             <span class="validationRequired"> *</span>
-            <input matInput type="password" class="form-control" formControlName="newPassword" name="password" id="password"
+            <input matInput type="password" class="form-control" formControlName="newPassword" name="password" id="password" (change)="revalidPasswordConfirm()"
               placeholder="Digite a Senha">
             <app-error-message [control]="editForm.get('newPassword')"></app-error-message>
           </div>
@@ -55,7 +55,7 @@
       <div class="col-12 col-sm-3">
         <div class="form-group row">
           <div class="col-12">
-            <label for="password">Confirmação de Senha</label>
+            <label for="passwordConfirm">Confirmação de Senha</label>
             <span class="validationRequired"> *</span>
             <input matInput type="password" class="form-control" formControlName="passwordConfirm" name="passwordConfirm" id="passwordConfirm"
               placeholder="Insira a senha novamente">
@@ -78,9 +78,8 @@
         <div class="form-group row">
           <div class="col-12">
             <label for="phone">Telefone</label>
-            <span class="validationRequired"> *</span>
             <input matInput type="phone" class="form-control" formControlName="phone" name="phone" id="phone"
-              placeholder="Digite o Telefone" [dropSpecialCharacters]="false" mask="(00) 0000-0000||(00) 00000-0000"/>
+              placeholder="Digite o Telefone" [dropSpecialCharacters]="false" mask="(00) 0000-0000||(00) 00000-0000" (change)="updateValidateFieldPhone()">
             <app-error-message [control]="editForm.get('phone')"></app-error-message>
           </div>
         </div>
@@ -92,7 +91,7 @@
     <div id="btns-action" class="text-right m-1">
       <button type="button" id="btn-back" (click)="goToList()" class="btn btn-lg btn-primary">Voltar</button>
       <button type="submit" id="btn-new-user" class="btn btn-lg btn-primary ml-4"
-        [disabled]="!editForm.valid">Cadastrar</button>
+      [disabled]="!editForm.valid">Cadastrar</button>
     </div>
   </div>
 </form>

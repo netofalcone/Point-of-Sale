@@ -19,14 +19,10 @@ export class UserService {
   createUser(user, dialog:MatDialog) {
     return this.http.post(AppConstants.baseUsers, user).subscribe(data => {
       this.toast.success('Cadastro realizado com sucesso.');
-      this.goToList();
       dialog.closeAll();
     },
     error => {
       this.toast.error('Error ao realizar cadastro.');
     });
-  }
-  public goToList(): void {
-
   }
 }

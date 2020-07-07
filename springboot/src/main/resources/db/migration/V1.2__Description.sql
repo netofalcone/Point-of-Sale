@@ -22,12 +22,11 @@ CREATE TABLE role_permission (
 
 CREATE TABLE public.user (
 	id INTEGER NOT NULL PRIMARY KEY,
-	name VARCHAR(50) NOT NULL,
+	name VARCHAR(250) NOT NULL,
 	email VARCHAR(250) NOT null,
 	password VARCHAR(100) NOT null,
 	phone VARCHAR(50) NOT null,
 	cpf VARCHAR(50) NOT NULL,
-	deleted BOOLEAN NOT null DEFAULT FALSE,
-	idrole INTEGER NOT null,
-	CONSTRAINT user_role_FK FOREIGN KEY (idrole) REFERENCES role (id)
+	deleted BOOLEAN NOT NULL DEFAULT FALSE,
+	role_id INTEGER NOT NULL
 );

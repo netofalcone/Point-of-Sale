@@ -6,11 +6,10 @@
     <div class="form-group row">
       <div class="col text-left">
         <label for="email">E-mail</label>
-        <span style="color:red; font-size: 15px;"> *</span>
+        <span class="validationRequired"> *</span>
         <input matInput type="email" class="form-control" formControlName="email" name="email" id="email"
           placeholder="Insira o seu email" required>
-        <mat-error *ngIf="getValidation('email', 'required')">Campo obrigatório.</mat-error>
-        <mat-error *ngIf="getValidation('email', 'email')">Formato incorreto.</mat-error>
+        <app-error-message [control]="formLogin.get('email')"></app-error-message>
       </div>
 
 
@@ -18,10 +17,10 @@
     <div class="form-group row">
       <div class="col text-left">
         <label for="password">Senha</label>
-        <span style="color:red; font-size: 15px;"> *</span>
-        <input matInput type="password" class="form-control" formControlName="password" name="password" id="userPasword"
+        <span class="validationRequired"> *</span>
+        <input matInput type="password" class="form-control" formControlName="password" name="password" id="password"
           placeholder="Insira a sua senha" required>
-        <mat-error *ngIf="getValidation('password', 'required')">Campo obrigatório.</mat-error>
+          <app-error-message [control]="formLogin.get('password')"></app-error-message>
 
       </div>
     </div>

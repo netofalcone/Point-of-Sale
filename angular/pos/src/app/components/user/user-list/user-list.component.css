@@ -1,0 +1,54 @@
+#user-list{
+  margin: 0 auto;
+  margin-top: 3%;
+  width: 70%;
+}
+#main-table{
+  width: 100%;
+}
+#div-table{
+  max-height: 60%;
+  overflow-y: auto;
+}
+table{
+  background-color: #FFFFFF;
+}
+#btn-new-user{
+  background-color: #3f51b5;
+  border: none;
+}
+#btn-new-back{
+  background-color: #e7e7e7;
+  border: 3px solid #3f51b5;
+  color: #3f51b5;
+}
+#name{
+  width: 50%;
+}
+#actions{
+  width: 10%;
+}
+.material-icons{
+  cursor: pointer;
+}
+input, select{
+  border: none;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  -webkit-border-radius: 10px;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: #ffffff;
+  -webkit-border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  height: 3px;
+  background-color: rgba(216, 216, 216, 0.897);
+  -webkit-border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:vertical:hover {
+  background-color:#cccccc;
+}

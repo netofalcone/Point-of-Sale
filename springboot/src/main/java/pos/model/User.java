@@ -3,27 +3,41 @@ package pos.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-@Entity(name = "User")
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+@Entity(name = "user")
+@SQLDelete(sql = "UPDATE public.user SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
+
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotNull
+    @NotBlank
     @Column(name = "name")
     private String name;
 
+    @NotNull
+    @NotBlank
     @Column(name = "email", unique = true)
     private String email;
 
+    @NotNull
+    @NotBlank
     @Column(name = "password")
     private String password;
 
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "cpf")
+    @Column(name = "cpf", unique = true)
     private String cpf;
 
     @Column(name = "deleted")

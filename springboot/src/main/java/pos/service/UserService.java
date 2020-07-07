@@ -30,12 +30,14 @@ public class UserService {
         return this.userRepository;
     }
 
-    public RoleService getRoleService() { return this.roleService;}
+    public RoleService getRoleService() {
+        return this.roleService;
+    }
 
     public List<UserDTO> get() {
         List<User> users = (List<User>) userRepository.findAll();
         List<UserDTO> usersDto = new ArrayList<>();
-        for (User u: users) {
+        for (User u : users) {
             usersDto.add(toUserDto(u));
         }
         return usersDto;

@@ -13,6 +13,7 @@ import {ToastrModule} from "ngx-toastr";
 import { HeaderComponent } from './template/header/header.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     HttpInterceptorModule,
     ToastrModule.forRoot(),
     MatToolbarModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

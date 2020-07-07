@@ -2,8 +2,8 @@ package pos.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import br.com.caelum.stella.validation.CPFValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,37 +51,77 @@ public class UserService {
     }
 
     public User create(User user) throws Exception {
-        if (validateCreate(user)) {
-            user.setPassword(CryptoUtil.hash(user.getPassword()));
-            user.setEmail(user.getEmail().toLowerCase());
-            return userRepository.save(user);
-        } else {
-            throw new Exception();
-        }
+        validateCreate(user);
+        user.setPassword(CryptoUtil.hash(user.getPassword()));
+        user.setEmail(user.getEmail().toLowerCase());
+        return userRepository.save(user);
     }
 
-    private boolean validateCreate(User user) {
 
-        return true;
+    private void validateCreate(User user) throws Exception {
+        CPFValidator cpfValidator = new CPFValidator();
+        try { cpfValidator.assertValid(user.getCpf());
+        } catch (Exception e) {
+            throw new Exception("Cpf inválido.");
+        }
+        if (user.getName().length() < 3 | user.getName().length() > 250 | !user.getName().matches("[a-zA-Z\\s]*")) {
+            throw new Exception("Nome inválido.");
+        }
+        if (getRepository().findByCpf(user.getCpf()) != null) {
+            throw new Exception("Cpf já cadastrado no sistema.");
+        }
+        if (getRepository().findByEmail(user.getEmail()) != null) {
+            throw new Exception("Email já cadastrado no sistema.");
+        }
+        if (!user.getEmail().matches("[a-zA-Z._-]+@+[a-zA-Z.]+") | user.getEmail() == null) {
+            throw new Exception("Email inválido.");
+        }
+        if (user.getPassword() == null | !user.getPassword().matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@!#])[0-9a-zA-Z$*&@!#]{8,}$")) {
+            throw new Exception("Senha inválida. É preciso ter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um caracter especial ($*&@!#).");
+        }
+        if (user.getPhone() != null) {
+            if (!user.getPhone().matches("[0-9]+") | (user.getPhone().length() != 8 & user.getPhone().length() != 11)) {
+                throw new Exception("Formato de telefone inválido. deve conter 8 ou 11 digitos, e apenas números.");
+            }
+        }
+        if (user.getRole() == null) {
+            throw new Exception("Cargo inválido.");
+        }
     }
 
     public User update(User user) throws Exception {
-        if (this.validateUpdate(user)) {
-            return userRepository.save(user);
-        } else {
-            throw new Exception();
-        }
+        this.validateUpdate(user);
+        return userRepository.save(user);
     }
 
-    private boolean validateUpdate(User user) {
+    private void validateUpdate(User user) throws Exception {
         User userTemporary = this.findUserbyEmail(user.getEmail());
 
-        if (!userTemporary.getPassword().equals(user.getPassword())) {
-            String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-            user.setPassword(passwordCrypted);
+        CPFValidator cpfValidator = new CPFValidator();
+        try { cpfValidator.assertValid(user.getCpf());
+        } catch (Exception e) {
+            throw new Exception("Cpf inválido.");
         }
-
-        return false;
+        user.getName().length() < 3 | user.getName().length() > 250 | !user.getName().matches("[a-zA-Z\\s]*")) {
+            throw new Exception("Nome inválido.");
+        }
+        if (getRepository().findByCpf(user.getCpf()) != null & userTemporary.getCpf() != user.getCpf()) {
+            throw new Exception("Cpf já cadastrado no sistema.");
+        }
+        if (getRepository().findByEmail(user.getEmail()) != null & userTemporary.getEmail() != user.getEmail()) {
+            throw new Exception("Email já cadastrado no sistema.");
+        }
+        if (!user.getEmail().matches("[a-zA-Z._-]+@+[a-zA-Z.]+") | user.getEmail() == null) {
+            throw new Exception("Email inválido.");
+        }
+        if (user.getPhone() != null) {
+            if (!user.getPhone().matches("[0-9]+") | user.getPhone().length() < 7 | user.getPhone().length() > 12) {
+                throw new Exception("Formato de telefone inválido. deve conter 8 ou 11 digitos, e apenas números.");
+            }
+        }
+        if (user.getRole() == null) {
+            throw new Exception("Cargo inválido.");
+        }
     }
 
     public User findUserbyEmail(String email) {

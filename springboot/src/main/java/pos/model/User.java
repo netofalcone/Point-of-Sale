@@ -38,7 +38,7 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @CPF()
+    @CPF
     @Column(name = "cpf", unique = true)
     private String cpf;
 

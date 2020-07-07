@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity(name = "user")
 @SQLDelete(sql = "UPDATE public.user SET deleted = true WHERE id = ?")
@@ -37,6 +38,7 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
 
+    @CPF
     @Column(name = "cpf", unique = true)
     private String cpf;
 

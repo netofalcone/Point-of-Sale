@@ -102,7 +102,7 @@ public class UserService {
             throw new Exception("Email inválido.");
         }
         if (user.getPhone() != null) {
-            if (!user.getPhone().matches("[0-9]+") | (user.getPhone().length() != 8 & user.getPhone().length() != 11)) {
+            if (!user.getPhone().matches("[0-9]+") | (user.getPhone().length() != 10 & user.getPhone().length() != 11)) {
                 throw new Exception("Formato de telefone inválido. deve conter 8 ou 11 digitos, e apenas números.");
             }
         }

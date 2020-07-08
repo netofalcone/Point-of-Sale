@@ -1,11 +1,11 @@
 package pos.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import pos.model.Permission;
-import pos.model.User;
 
-import java.util.List;
+import pos.model.Permission;
 
 public interface PermissionRepository extends CrudRepository<Permission, Integer> {
 

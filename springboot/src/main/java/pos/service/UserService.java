@@ -3,8 +3,8 @@ package pos.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.caelum.stella.validation.CPFValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pos.core.util.CryptoUtil;
@@ -58,32 +58,17 @@ public class UserService {
         return userRepository.save(user);
     }
 
+
     private void validateCreate(User user) throws Exception {
-        if (user.getName().length() < 3 | user.getName().length() > 250 | !user.getName().matches("[a-zA-Z\\s]*")) {
-            throw new Exception("name.invalid");
-        }
+        validate(user);
         if (getRepository().findByCpf(user.getCpf()) != null) {
-            throw new Exception("cpf.exists");
+            throw new Exception("Cpf já cadastrado no sistema.");
         }
         if (getRepository().findByEmail(user.getEmail()) != null) {
-            throw new Exception("email.exists");
+            throw new Exception("Email já cadastrado no sistema.");
         }
-        if (!user.getEmail().matches("[a-zA-Z._-]+@+[a-zA-Z.]+") | user.getEmail() == null) {
-            throw new Exception("email.invalid");
-        }
-        if (user.getCpf().length() != 11) {
-            throw new Exception("cpf.invalid");
-        }
-        if (user.getPassword() == null | !user.getPassword().matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@!#]{8,}$")) {
-            throw new Exception("password.invalid");
-        }
-        if (user.getPhone() != null) {
-            if (!user.getPhone().matches("[0-9]+") | user.getPhone().length() < 7 | user.getPhone().length() > 12) {
-                throw new Exception("phone.invalid");
-            }
-        }
-        if (user.getRole() == null) {
-            throw new Exception("role.invalid");
+        if (user.getPassword() == null | !user.getPassword().matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@!#])[0-9a-zA-Z$*&@!#]{8,}$")) {
+            throw new Exception("Senha inválida. É preciso ter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um caracter especial ($*&@!#).");
         }
     }
 
@@ -95,32 +80,34 @@ public class UserService {
     private void validateUpdate(User user) throws Exception {
         User userTemporary = this.findUserbyEmail(user.getEmail());
 
-        if (!userTemporary.getPassword().equals(user.getPassword())) {
-            String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-            user.setPassword(passwordCrypted);
-        }
-        if (user.getName().length() < 3 | user.getName().length() > 250 | !user.getName().matches("[a-zA-Z\\s]*")) {
-            throw new Exception("name.invalid");
-        }
+        validate(user);
         if (getRepository().findByCpf(user.getCpf()) != null & userTemporary.getCpf() != user.getCpf()) {
-            throw new Exception("cpf.exists");
+            throw new Exception("Cpf já cadastrado no sistema.");
         }
         if (getRepository().findByEmail(user.getEmail()) != null & userTemporary.getEmail() != user.getEmail()) {
-            throw new Exception("email.exists");
+            throw new Exception("Email já cadastrado no sistema.");
+        }
+    }
+
+    private void validate(User user) throws Exception {
+        CPFValidator cpfValidator = new CPFValidator();
+        try { cpfValidator.assertValid(user.getCpf());
+        } catch (Exception e) {
+            throw new Exception("Cpf inválido.");
+        }
+        if (user.getName().length() < 3 | user.getName().length() > 250 | !user.getName().matches("[a-zA-Z\\s]*")) {
+            throw new Exception("Nome inválido.");
         }
         if (!user.getEmail().matches("[a-zA-Z._-]+@+[a-zA-Z.]+") | user.getEmail() == null) {
-            throw new Exception("email.invalid");
-        }
-        if (user.getCpf().length() != 11) {
-            throw new Exception("cpf.invalid");
+            throw new Exception("Email inválido.");
         }
         if (user.getPhone() != null) {
-            if (!user.getPhone().matches("[0-9]+") | user.getPhone().length() < 7 | user.getPhone().length() > 12) {
-                throw new Exception("phone.invalid");
+            if (!user.getPhone().matches("[0-9]+") | (user.getPhone().length() != 8 & user.getPhone().length() != 11)) {
+                throw new Exception("Formato de telefone inválido. deve conter 8 ou 11 digitos, e apenas números.");
             }
         }
         if (user.getRole() == null) {
-            throw new Exception("role.invalid");
+            throw new Exception("Cargo inválido.");
         }
     }
 

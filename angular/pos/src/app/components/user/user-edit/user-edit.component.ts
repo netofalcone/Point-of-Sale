@@ -69,7 +69,12 @@ export class UserEditComponent implements OnInit {
     this.labelBtnSubmit = 'Cadastrar';
     return false;
   }
-
+  validEditMode() {
+    if (this.userService.isEditMode()) {
+      return true;
+    }
+    return false;
+  }
   private setFormControlEditMode(result: Object) {
     this.editForm.get('id').setValue(result['id']);
     this.editForm.get('name').setValue(result['name']);

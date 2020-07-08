@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="row">
-      <div *ngIf="!this.userService.isEditMode()" class="col-12 col-sm-6">
+      <div *ngIf="!validEditMode()" class="col-12 col-sm-6">
         <div class="form-group row">
           <div class="col-12">
             <label for="password">Senha</label>
@@ -72,7 +72,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="!this.userService.isEditMode()" class="col-12 col-sm-6">
+      <div *ngIf="!validEditMode()" class="col-12 col-sm-6">
         <div class="form-group row">
           <div class="col-12">
             <label for="passwordConfirm">Confirmação de Senha</label>

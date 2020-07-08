@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import pos.core.util.CryptoUtil;
 
 
 @SpringBootApplication
@@ -20,5 +21,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class PosApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PosApplication.class, args);
+
+		String senha = "123456789";
+		System.out.println( CryptoUtil.hash(senha) );
+
 	}
 }

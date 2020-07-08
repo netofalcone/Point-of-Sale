@@ -24,7 +24,7 @@ CREATE TABLE public.user (
 	id INTEGER NOT NULL PRIMARY KEY,
 	name VARCHAR(250) NOT NULL,
 	email VARCHAR(250) NOT null,
-	password VARCHAR(100) NOT null,
+	password VARCHAR(100),
 	phone VARCHAR(50) NOT null,
 	cpf VARCHAR(50) NOT NULL,
 	deleted BOOLEAN NOT NULL DEFAULT FALSE,

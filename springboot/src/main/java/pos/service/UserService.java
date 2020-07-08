@@ -64,23 +64,25 @@ public class UserService {
         return true;
     }
 
-    public User update(User user) throws Exception {
-        if (this.validateUpdate(user)) {
+    public User update(Integer id, User user) throws Exception {
+        if (this.validateUpdate(id, user)) {
             return userRepository.save(user);
         } else {
             throw new Exception();
         }
     }
 
-    private boolean validateUpdate(User user) {
-        User userTemporary = this.findUserbyEmail(user.getEmail());
-
-        if (!userTemporary.getPassword().equals(user.getPassword())) {
-            String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-            user.setPassword(passwordCrypted);
+    private boolean validateUpdate(Integer id, User user) {
+        User userTemporary = this.getRepository().findUserById(id);
+        if(!userTemporary.getEmail().equals(user.getEmail())){
+           return  false;
         }
-
-        return false;
+       if (userTemporary.getName().equals(user.getName()));
+           if (userTemporary.getName().equals(user.getName()));
+               if (userTemporary.getCpf().equals(user.getCpf()));
+                    if (userTemporary.getPhone().equals(user.getPhone()));
+                         if (userTemporary.getRole().equals(user.getRole()));
+               return true;
     }
 
     public User findUserbyEmail(String email) {

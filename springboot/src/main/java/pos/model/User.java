@@ -8,42 +8,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.br.CPF;
 
 @Entity(name = "user")
 @SQLDelete(sql = "UPDATE public.user SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotNull
-    @NotBlank
     @Column(name = "name")
     private String name;
 
-    @NotNull
-    @NotBlank
     @Column(name = "email", unique = true)
     private String email;
 
-    @NotNull
-    @NotBlank
     @Column(name = "password")
     private String password;
 
     @Column(name = "phone")
     private String phone;
 
-    @CPF
     @Column(name = "cpf", unique = true)
     private String cpf;
 

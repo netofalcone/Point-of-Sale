@@ -7,6 +7,7 @@ import br.com.caelum.stella.validation.CPFValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pos.core.exception.BusinessException;
 import pos.core.util.CryptoUtil;
 import pos.dto.RoleDTO;
 import pos.dto.UserDTO;
@@ -59,16 +60,23 @@ public class UserService {
     }
 
 
-    private void validateCreate(User user) throws Exception {
+    private void validateCreate(User user) throws BusinessException {
         validate(user);
+        validateNullAndBlank(user);
+        CPFValidator cpfValidator = new CPFValidator();
+        try { cpfValidator.assertValid(user.getCpf());
+        } catch (Exception e) {
+            throw new BusinessException("cpf.invalid");
+        }
+
         if (getRepository().findByCpf(user.getCpf()) != null) {
-            throw new Exception("Cpf já cadastrado no sistema.");
+            throw new BusinessException("cpf.exists");
         }
         if (getRepository().findByEmail(user.getEmail()) != null) {
-            throw new Exception("Email já cadastrado no sistema.");
+            throw new BusinessException("email.exists");
         }
         if (user.getPassword() == null | !user.getPassword().matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@!#])[0-9a-zA-Z$*&@!#]{8,}$")) {
-            throw new Exception("Senha inválida. É preciso ter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um caracter especial ($*&@!#).");
+            throw new BusinessException("password.invalid");
         }
     }
 
@@ -77,37 +85,43 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    private void validateUpdate(User user) throws Exception {
+    private void validateUpdate(User user) throws BusinessException {
         User userTemporary = this.findUserbyEmail(user.getEmail());
-
         validate(user);
-        if (getRepository().findByCpf(user.getCpf()) != null & userTemporary.getCpf() != user.getCpf()) {
-            throw new Exception("Cpf já cadastrado no sistema.");
-        }
         if (getRepository().findByEmail(user.getEmail()) != null & userTemporary.getEmail() != user.getEmail()) {
-            throw new Exception("Email já cadastrado no sistema.");
+            throw new BusinessException("email.exists");
+        }
+    }
+    private void validateNullAndBlank(User user) throws BusinessException {
+        if (user.getName() == null | user.getName().matches("\\s+\\s")) {
+            throw new BusinessException("name.invalid");
+        }
+        if (user.getCpf() == null | user.getCpf().matches("\\s+\\s")) {
+            throw new BusinessException("cpf.invalid");
+        }
+        if (user.getEmail() == null | user.getEmail().matches("\\s+\\s")) {
+            throw new BusinessException("email.invalid");
+        }
+        if (user.getPassword() == null | user.getPassword().matches("\\s+\\s")) {
+            throw new BusinessException("password.invalid");
+        }
+        if (user.getRole() == null) {
+            throw new BusinessException("role.invalid");
         }
     }
 
-    private void validate(User user) throws Exception {
-        CPFValidator cpfValidator = new CPFValidator();
-        try { cpfValidator.assertValid(user.getCpf());
-        } catch (Exception e) {
-            throw new Exception("Cpf inválido.");
-        }
+    private void validate(User user) throws BusinessException {
+
         if (user.getName().length() < 3 | user.getName().length() > 250 | !user.getName().matches("[a-zA-Z\\s]*")) {
-            throw new Exception("Nome inválido.");
-        }
-        if (!user.getEmail().matches("[a-zA-Z._-]+@+[a-zA-Z.]+") | user.getEmail() == null) {
-            throw new Exception("Email inválido.");
+            throw new BusinessException("name.invalid");
         }
         if (user.getPhone() != null) {
             if (!user.getPhone().matches("[0-9]+") | (user.getPhone().length() != 10 & user.getPhone().length() != 11)) {
-                throw new Exception("Formato de telefone inválido. deve conter 8 ou 11 digitos, e apenas números.");
+                throw new BusinessException("phone.invalid");
             }
         }
         if (user.getRole() == null) {
-            throw new Exception("Cargo inválido.");
+            throw new BusinessException("role.invalid");
         }
     }
 

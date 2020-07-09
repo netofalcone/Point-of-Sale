@@ -11,17 +11,21 @@ import { MatRipple } from '@angular/material/core';
 })
 export class UserService {
 
-  userDeleted: number;
-  
+  userId: number;
+
   constructor(private http: HttpClient, private router:Router, private toast: ToastrService) { }
 
   getUsers() {
-    console.log()
+    console.log();
     return this.http.get(AppConstants.baseUsers);
   }
 
+  getUserByID(){
+    return this.http.get(AppConstants.baseUsers + '/' + this.userId);
+  }
+
   delete(dialog: MatDialog){
-    return this.http.delete(AppConstants.baseUsers+'/'+this.userDeleted).subscribe(data =>{
+    return this.http.delete(AppConstants.baseUsers+'/'+this.userId).subscribe(data =>{
       this.toast.success('Usuário deletado com sucesso.');
       dialog.closeAll();
     },
@@ -40,7 +44,7 @@ export class UserService {
     });
   }
 
-  setUserDeleted(id: number){
-    this.userDeleted = id;
+  setUser(id: number){
+    this.userId = id;
   }
 }

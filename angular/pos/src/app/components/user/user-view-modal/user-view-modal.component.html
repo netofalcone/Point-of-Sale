@@ -1,0 +1,65 @@
+<div *ngIf="user">
+  <form  autocomplete="off">
+    <div id="view-edit">
+
+      <div class="row m-0 mb-3">
+        <div class="col-12 m-0 p-0">
+          <h1>Visualizar Usuário</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-sm-8">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> Nome </label>
+              <input class="form-control" type="text" placeholder="Name" [value]="user?.name" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> Cargo </label>
+              <input class="form-control" type="text" placeholder="Cargo" [value]="user?.role.name" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> Email </label>
+              <input class="form-control" type="text" placeholder="Email" [value]="user?.email" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> CPF </label>
+              <input class="form-control" type="text" placeholder="CPF" [value]="user?.cpf" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> Telefone </label>
+              <input class="form-control"  type="text" placeholder="Telefone" [value]="user?.phone"  disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+    <div id="btns-action" class="text-right m-1">
+      <button type="submit" id="btn-back" class="btn btn-lg btn-primary ml-4" (click)="goToList()">Voltar</button>
+    </div>
+  </form>
+
+</div>
+
+
+
+

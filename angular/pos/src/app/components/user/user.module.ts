@@ -9,6 +9,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from '../../shared/shared.module';
+import { UserViewModalComponent } from './user-view-modal/user-view-modal.component';
+
 
 const routes: Routes = [
   {
@@ -17,7 +19,7 @@ const routes: Routes = [
   }
 ];
 @NgModule({
-  declarations: [UserListComponent, UserEditComponent],
+  declarations: [UserListComponent, UserEditComponent, UserViewModalComponent],
   entryComponents:[UserEditComponent],
   imports: [
     CommonModule,
@@ -28,7 +30,7 @@ const routes: Routes = [
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class UserModule { }

@@ -25,11 +25,11 @@ export class UserListComponent implements OnInit {
   }
 
   createUser() {
-    this.userService.setUserId(undefined);
+    this.userService.setId(undefined);
     this.dialog.open(UserEditComponent);
   }
   editUser(id: number) {
-    this.userService.setUserId(id);
+    this.userService.setId(id);
     this.dialog.open(UserEditComponent);
   }
 }

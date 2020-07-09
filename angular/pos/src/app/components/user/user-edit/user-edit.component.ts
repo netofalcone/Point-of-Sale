@@ -44,7 +44,7 @@ export class UserEditComponent implements OnInit {
   }
   updateValidateFieldPhone() {
     if (this.editForm.get('phone') !== undefined) {
-      this.editForm.get('phone').setValidators([Validators.minLength(8), Validators.maxLength(11)]);
+      this.editForm.get('phone').setValidators([Validators.minLength(10), Validators.maxLength(11)]);
     } else {
       this.editForm.get('phone').clearValidators();
     }

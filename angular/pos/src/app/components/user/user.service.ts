@@ -21,7 +21,7 @@ export class UserService {
       return false;
     }
   }
-  setUserId(id) {
+  setId(id) {
     this.userId = id;
   }
   getUser() {
@@ -41,7 +41,7 @@ export class UserService {
   }
 
   createUser(user, dialog: MatDialog) {
-    this.setUserId(undefined);
+    this.setId(undefined);
     return this.http.post(AppConstants.baseUsers, user).subscribe(data => {
       this.toast.success('Cadastro realizado com sucesso.');
       dialog.closeAll();

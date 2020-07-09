@@ -20,7 +20,6 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    console.log(this.url);
   }
 
   createForm() {

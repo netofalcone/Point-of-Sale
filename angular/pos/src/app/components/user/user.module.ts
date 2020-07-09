@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserListComponent } from './user-list/user-list.component';
 import { Routes, RouterModule } from '@angular/router';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from '../../shared/shared.module';
 import { UserViewModalComponent } from './user-view-modal/user-view-modal.component';
-
+import { NgxMaskModule } from "ngx-mask";
 
 const routes: Routes = [
   {
@@ -31,6 +31,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    NgxMaskModule
   ]
 })
 export class UserModule { }

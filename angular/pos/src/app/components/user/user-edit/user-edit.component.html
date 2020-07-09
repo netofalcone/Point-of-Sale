@@ -44,8 +44,8 @@
             <label for="cpf">CPF</label>
             <span class="validationRequired"> *</span>
             <input matInput type="cpf" class="form-control" formControlName="cpf" name="cpf" id="cpf"
-              placeholder="Digite o CPF">
-            <app-error-message [control]="editForm.get('cpf')"></app-error-message>
+            placeholder="Digite o CPF" [dropSpecialCharacters]="true" mask="000.000.000-00">
+          <app-error-message [control]="editForm.get('cpf')"></app-error-message>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
           <div class="col-12">
             <label for="phone">Telefone</label>
             <input matInput type="phone" class="form-control" formControlName="phone" name="phone" id="phone"
-              placeholder="Digite o Telefone" (change)="updateValidateFieldPhone()">
+              placeholder="Digite o Telefone" [dropSpecialCharacters]="true" mask="(00) 0000-0000||(00) 00000-0000" (change)="updateValidateFieldPhone()">
             <app-error-message [control]="editForm.get('phone')"></app-error-message>
           </div>
         </div>

@@ -13,7 +13,6 @@ export class UserService {
   constructor(private http: HttpClient, private router:Router, private toast: ToastrService) { }
 
   getUsers() {
-    console.log()
     return this.http.get(AppConstants.baseUsers);
   }
   createUser(user, dialog:MatDialog) {

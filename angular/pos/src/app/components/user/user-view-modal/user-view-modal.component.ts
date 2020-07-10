@@ -24,4 +24,6 @@ export class UserViewModalComponent implements OnInit {
   public goToList(): void {
     this.dialog.closeAll();
   }
+
 }
+

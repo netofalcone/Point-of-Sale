@@ -17,8 +17,12 @@ import pos.repository.UserRepository;
 @Service
 public class UserService {
 
+
     private UserRepository userRepository;
     private RoleService roleService;
+
+    boolean b;
+
 
     @Autowired
     public UserService(UserRepository userRepository, RoleService roleService) {
@@ -30,12 +34,14 @@ public class UserService {
         return this.userRepository;
     }
 
-    public RoleService getRoleService() { return this.roleService;}
+    public RoleService getRoleService() {
+        return this.roleService;
+    }
 
     public List<UserDTO> get() {
         List<User> users = (List<User>) userRepository.findAll();
         List<UserDTO> usersDto = new ArrayList<>();
-        for (User u: users) {
+        for (User u : users) {
             usersDto.add(toUserDto(u));
         }
         return usersDto;
@@ -74,16 +80,33 @@ public class UserService {
 
     private boolean validateUpdate(Integer id, User user) {
         User userTemporary = this.getRepository().findUserById(id);
-        if(!userTemporary.getEmail().equals(user.getEmail())){
-           return  false;
+
+        if (!userTemporary.getEmail().equals(user.getEmail())) {
+            return false;
         }
-       if (userTemporary.getName().equals(user.getName()));
-           if (userTemporary.getName().equals(user.getName()));
-               if (userTemporary.getCpf().equals(user.getCpf()));
-                    if (userTemporary.getPhone().equals(user.getPhone()));
-                         if (userTemporary.getRole().equals(user.getRole()));
-               return true;
+        if (!userTemporary.getCpf().equals(user.getCpf())) {
+            return false;
+        }
+        if (!userTemporary.getRole().getId().equals(user.getRole().getId())){
+            return false;
+        }
+
+        if (user.getName().length() < 3) {
+            return false;
+        }
+        b = user.getName().matches("\\d*\\W*");
+        if (b){
+            return false;
+        }
+
+        return true;
     }
+
+
+
+
+
+
 
     public User findUserbyEmail(String email) {
         return getRepository().findByEmail(email);

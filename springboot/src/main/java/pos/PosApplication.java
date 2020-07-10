@@ -21,9 +21,5 @@ import pos.core.util.CryptoUtil;
 public class PosApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PosApplication.class, args);
-
-		String senha = "123456789";
-		System.out.println( CryptoUtil.hash(senha) );
-
 	}
 }

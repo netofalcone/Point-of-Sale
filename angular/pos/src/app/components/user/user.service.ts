@@ -4,24 +4,50 @@ import { AppConstants } from 'src/app/app-constants';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
+import { NumberSymbol } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  userId: number;
 
-  constructor(private http: HttpClient, private router:Router, private toast: ToastrService) { }
+  constructor(private http: HttpClient, private router: Router, private toast: ToastrService) { }
 
+  isEditMode() {
+    if (this.userId !== undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  setId(id) {
+    this.userId = id;
+  }
+  getUser() {
+    return this.http.get(AppConstants.baseUsers + '/' + this.userId);
+  }
   getUsers() {
     return this.http.get(AppConstants.baseUsers);
   }
-  createUser(user, dialog:MatDialog) {
+  updateUser(user, dialog: MatDialog) {
+    return this.http.patch(AppConstants.baseUsers + '/' + this.userId, user).subscribe(data => {
+      this.toast.success('Usuário atualizado com sucesso.');
+      dialog.closeAll();
+    },
+      error => {
+        this.toast.error('Erro ao atualizar usuário.');
+      });
+  }
+
+  createUser(user, dialog: MatDialog) {
+    this.setId(undefined);
     return this.http.post(AppConstants.baseUsers, user).subscribe(data => {
       this.toast.success('Cadastro realizado com sucesso.');
       dialog.closeAll();
     },
-    error => {
-      this.toast.error('Error ao realizar cadastro.');
-    });
+      error => {
+        this.toast.error('Error ao realizar cadastro.');
+      });
   }
 }

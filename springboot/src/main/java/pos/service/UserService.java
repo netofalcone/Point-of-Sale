@@ -61,10 +61,11 @@ public class UserService {
 
 
     private void validateCreate(User user) throws BusinessException {
-        validate(user);
         validateNullAndBlank(user);
+        validate(user);
         CPFValidator cpfValidator = new CPFValidator();
-        try { cpfValidator.assertValid(user.getCpf());
+        try {
+            cpfValidator.assertValid(user.getCpf());
         } catch (Exception e) {
             throw new BusinessException("cpf.invalid");
         }
@@ -92,17 +93,18 @@ public class UserService {
             throw new BusinessException("email.exists");
         }
     }
+
     private void validateNullAndBlank(User user) throws BusinessException {
-        if (user.getName() == null | user.getName().matches("\\s+\\s")) {
+        if (user.getName() == null || user.getName().matches("\\s+\\s")) {
             throw new BusinessException("name.invalid");
         }
-        if (user.getCpf() == null | user.getCpf().matches("\\s+\\s")) {
+        if (user.getCpf() == null || user.getCpf().matches("\\s+\\s")) {
             throw new BusinessException("cpf.invalid");
         }
-        if (user.getEmail() == null | user.getEmail().matches("\\s+\\s")) {
+        if (user.getEmail() == null || user.getEmail().matches("\\s+\\s")) {
             throw new BusinessException("email.invalid");
         }
-        if (user.getPassword() == null | user.getPassword().matches("\\s+\\s")) {
+        if (user.getPassword() == null || user.getPassword().matches("\\s+\\s")) {
             throw new BusinessException("password.invalid");
         }
         if (user.getRole() == null) {
@@ -133,7 +135,10 @@ public class UserService {
         return getRepository().findByEmailAndPassword(username.toLowerCase(), CryptoUtil.hash(password));
     }
 
-    public User toUserModel(UserDTO userDTO) {
+    public User toUserModel(UserDTO userDTO) throws BusinessException {
+        if (userDTO.getRole() == null) {
+            throw new BusinessException("role.invalid");
+        }
         User user = new User();
         Role role = getRoleService().getRoleById(userDTO.getRole().getId());
         user.setId(userDTO.getId());
@@ -160,7 +165,8 @@ public class UserService {
         return userDTO;
     }
 
-	public void delete(Integer id) {
-        getRepository().delete(getRepository().findUserById(id));;
-	}
+    public void delete(Integer id) {
+        getRepository().delete(getRepository().findUserById(id));
+        ;
+    }
 }

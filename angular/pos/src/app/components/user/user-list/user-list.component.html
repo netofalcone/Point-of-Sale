@@ -5,7 +5,7 @@
         <h1>Lista de Usuários</h1>
       </div>
       <div class="col-6 m-0 p-0 text-right">
-        <button type="button" id="btn-new-user" mat-raised-button (click)="openDialog()"
+        <button type="button" id="btn-new-user" mat-raised-button (click)="createUser()"
             class="btn btn-lg btn-primary">Novo Usuário
         </button>
         </div>
@@ -64,7 +64,7 @@
               <td>{{user.phone}}</td>
               <td id="actions">
                 <span class="material-icons">remove_red_eye</span>
-                <span class="material-icons">create</span>
+                <span class="material-icons"(click)="editUser(user.id)">create</span>
                 <span class="material-icons">delete</span>
               </td>
             </tr>

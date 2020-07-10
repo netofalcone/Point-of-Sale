@@ -21,9 +21,6 @@ public class UserService {
     private UserRepository userRepository;
     private RoleService roleService;
 
-    boolean b;
-
-
     @Autowired
     public UserService(UserRepository userRepository, RoleService roleService) {
         this.userRepository = userRepository;
@@ -90,23 +87,15 @@ public class UserService {
         if (!userTemporary.getRole().getId().equals(user.getRole().getId())){
             return false;
         }
-
         if (user.getName().length() < 3) {
             return false;
         }
-        b = user.getName().matches("\\d*\\W*");
-        if (b){
+        if (!user.getName().matches(("[a-zA-Z\\s]*"))){
             return false;
         }
 
         return true;
     }
-
-
-
-
-
-
 
     public User findUserbyEmail(String email) {
         return getRepository().findByEmail(email);

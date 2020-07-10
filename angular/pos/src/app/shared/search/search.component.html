@@ -1,0 +1,8 @@
+<form [formGroup]="searchForm">
+  <div class="row m-0 p-0 justify-content-between">
+    <div class="col-3 m-0 p-0">
+      <input type="text" class="form-control mb-4" placeholder="Pesquisar" formControlName="queryField"
+        (keypress)="onSearch($event)">
+    </div>
+  </div>
+</form>

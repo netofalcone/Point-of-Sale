@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit {
       this.users = result;
     });
     this.url = AppConstants.baseUsers;
-    this.fields = ['name', 'role.name'];
+    this.fields = ['name'];
   }
 
   ngOnInit(): void { }

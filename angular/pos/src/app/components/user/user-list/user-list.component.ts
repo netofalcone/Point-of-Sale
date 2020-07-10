@@ -1,3 +1,4 @@
+import { AppConstants } from './../../../app-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -11,11 +12,14 @@ import { UserEditComponent } from '../user-edit/user-edit.component';
 })
 export class UserListComponent implements OnInit {
   users: any;
-
+  url: string;
+  fields: string [];
   constructor(private userService: UserService, private router: Router, public dialog: MatDialog) {
     this.userService.getUsers().subscribe(result => {
       this.users = result;
     });
+    this.url = AppConstants.baseUsers;
+    this.fields = ['name'];
   }
 
   ngOnInit(): void { }
@@ -31,5 +35,8 @@ export class UserListComponent implements OnInit {
   editUser(id: number) {
     this.userService.setId(id);
     this.dialog.open(UserEditComponent);
+  }
+  filterList(resultSearch) {
+    this.users = resultSearch;
   }
 }

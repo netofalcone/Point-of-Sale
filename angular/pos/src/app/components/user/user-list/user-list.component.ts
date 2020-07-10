@@ -24,7 +24,12 @@ export class UserListComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  openDialog(){
+  createUser() {
+    this.userService.setId(undefined);
+    this.dialog.open(UserEditComponent);
+  }
+  editUser(id: number) {
+    this.userService.setId(id);
     this.dialog.open(UserEditComponent);
   }
 }

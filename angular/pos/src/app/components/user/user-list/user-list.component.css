@@ -7,11 +7,12 @@
   width: 100%;
 }
 #div-table{
-  height: 500px;
-  overflow-y: scroll;
+  max-height: 30vh;
+  overflow-y: auto;
 }
 table{
   background-color: #FFFFFF;
+
 }
 #btn-new-user{
   background-color: #3f51b5;

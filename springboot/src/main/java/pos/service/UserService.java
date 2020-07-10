@@ -73,7 +73,7 @@ public class UserService {
         if (getRepository().findByCpf(user.getCpf()) != null) {
             throw new BusinessException("cpf.exists");
         }
-        if (!user.getEmail().matches("[a-z0-9.\\-_]+@[a-z0-9]+.[a-z]+(\\.[a-z]+)")) {
+        if (!user.getEmail().matches("[a-z0-9.\\-_]+@[a-z0-9]+.[a-z]+(\\.[a-z]+)+")) {
             throw new BusinessException("email.invalid");
         }
         if (getRepository().findByEmail(user.getEmail()) != null) {

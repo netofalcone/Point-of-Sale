@@ -14,6 +14,11 @@ import { HeaderComponent } from './template/header/header.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { SharedModule } from './shared/shared.module';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 @NgModule({
   declarations: [
@@ -28,11 +33,12 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    HttpInterceptorModule,
+    .    HttpInterceptorModule,
     ToastrModule.forRoot(),
     MatToolbarModule,
     MatFormFieldModule,
-    SharedModule
+    SharedModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

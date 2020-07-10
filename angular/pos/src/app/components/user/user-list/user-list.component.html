@@ -5,41 +5,50 @@
         <h1>Lista de Usuários</h1>
       </div>
       <div class="col-6 m-0 p-0 text-right">
-        <button type="button" id="btn-new-user" mat-raised-button (click)="openDialog()"
+        <button type="button" id="btn-new-user" mat-raised-button (click)="createUser()"
             class="btn btn-lg btn-primary">Novo Usuário
         </button>
-        </div>
-    </div>
-  </div>
-
-  <div class="row m-0 p-0 justify-content-between">
-    <div class="col-3 m-0 p-0">
-      <input matInput type="email" class="form-control mb-4" name="email" id="email" placeholder="Pesquisar" required>
-    </div>
-    <div class="col-6 m-0 p-0">
-      <div class="row m-0 p-0 justify-content-end">
-        <div class="col-3 m-0 p-0 mr-4">
-          <select class="form-control">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-
-        </div>
-        <div class="col-3 m-0 p-0">
-
-          <select class="form-control">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-        </div>
       </div>
     </div>
+  </div>
+  <app-search [url]="url" [fields]="fields" (changeResult)="filterList($event)"></app-search>
+  <div id="main-table">
+    <div id="div-table" class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Cargo</th>
+            <th scope="col">Email</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let user of users">
+            <td id="name">{{user.name}}</td>
+            <td>{{user.cpf}}</td>
+            <td>{{user.role.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phone}}</td>
+            <td id="actions">
+              <span class="material-icons">remove_red_eye</span>
+              <span class="material-icons">create</span>
+              <span class="material-icons">delete</span>
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+
+
+    </div>
+<<<<<<< HEAD
     <div id="main-table">
       <div id="div-table" class="table-responsive">
         <table class="table table-bordered table-striped">
@@ -81,8 +90,15 @@
           <div class="col-6 m-0 p-0 text-right"><button type="button" id="btn-new-back" (click)="goToHome()"
               class="btn btn-lg btn-primary">Voltar</button></div>
         </div>
+=======
+    <div class="mt-4">
+      <div class="row m-0 p-0 l-0 justify-content-end">
+        <div class="col-6 m-0 p-0 text-right"><button type="button" id="btn-new-back" (click)="goToHome()"
+            class="btn btn-lg btn-primary">Voltar</button></div>
+>>>>>>> 85845f76450982ca50f37d0ced4ac7be71947481
       </div>
     </div>
-
-
   </div>
+
+
+</div>

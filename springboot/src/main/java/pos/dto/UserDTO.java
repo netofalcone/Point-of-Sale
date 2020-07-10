@@ -1,7 +1,5 @@
 package pos.dto;
 
-import pos.model.Role;
-
 public class UserDTO {
 
     private Integer id;

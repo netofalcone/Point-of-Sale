@@ -1,6 +1,5 @@
 package pos.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LoginDTO {
@@ -14,6 +13,8 @@ public class LoginDTO {
     private String name;
 
     private String token;
+
+    private String refreshToken;
 
     private List<String> permissions;
 
@@ -77,5 +78,13 @@ public class LoginDTO {
 
     public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

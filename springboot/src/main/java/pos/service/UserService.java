@@ -2,12 +2,12 @@ package pos.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import br.com.caelum.stella.validation.CPFValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import pos.core.exception.BusinessException;
 import pos.core.util.CryptoUtil;
 import pos.dto.RoleDTO;
 import pos.dto.UserDTO;
@@ -31,12 +31,14 @@ public class UserService {
         return this.userRepository;
     }
 
-    public RoleService getRoleService() { return this.roleService;}
+    public RoleService getRoleService() {
+        return this.roleService;
+    }
 
     public List<UserDTO> get() {
         List<User> users = (List<User>) userRepository.findAll();
         List<UserDTO> usersDto = new ArrayList<>();
-        for (User u: users) {
+        for (User u : users) {
             usersDto.add(toUserDto(u));
         }
         return usersDto;
@@ -51,37 +53,81 @@ public class UserService {
     }
 
     public User create(User user) throws Exception {
-        if (validateCreate(user)) {
-            user.setPassword(CryptoUtil.hash(user.getPassword()));
-            user.setEmail(user.getEmail().toLowerCase());
-            return userRepository.save(user);
-        } else {
-            throw new Exception();
-        }
+        validateCreate(user);
+        user.setPassword(CryptoUtil.hash(user.getPassword()));
+        user.setEmail(user.getEmail().toLowerCase());
+        return userRepository.save(user);
     }
 
-    private boolean validateCreate(User user) {
 
-        return true;
+    private void validateCreate(User user) throws BusinessException {
+        validateNullAndBlank(user);
+        validate(user);
+        CPFValidator cpfValidator = new CPFValidator();
+        try {
+            cpfValidator.assertValid(user.getCpf());
+        } catch (Exception e) {
+            throw new BusinessException("cpf.invalid");
+        }
+
+        if (getRepository().findByCpf(user.getCpf()) != null) {
+            throw new BusinessException("cpf.exists");
+        }
+        if (!user.getEmail().matches("[a-z0-9.\\-_]+@[a-z0-9]+.[a-z]+(\\.[a-z]+)+")) {
+            throw new BusinessException("email.invalid");
+        }
+        if (getRepository().findByEmail(user.getEmail()) != null) {
+            throw new BusinessException("email.exists");
+        }
+        if (user.getPassword() == null | !user.getPassword().matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@!#])[0-9a-zA-Z$*&@!#]{8,}$")) {
+            throw new BusinessException("password.invalid");
+        }
     }
 
     public User update(User user) throws Exception {
-        if (this.validateUpdate(user)) {
-            return userRepository.save(user);
-        } else {
-            throw new Exception();
+        this.validateUpdate(user);
+        return userRepository.save(user);
+    }
+
+    private void validateUpdate(User user) throws BusinessException {
+        User userTemporary = this.findUserbyEmail(user.getEmail());
+        validate(user);
+        if (getRepository().findByEmail(user.getEmail()) != null & userTemporary.getEmail() != user.getEmail()) {
+            throw new BusinessException("email.exists");
         }
     }
 
-    private boolean validateUpdate(User user) {
-        User userTemporary = this.findUserbyEmail(user.getEmail());
-
-        if (!userTemporary.getPassword().equals(user.getPassword())) {
-            String passwordCrypted = new BCryptPasswordEncoder().encode(user.getPassword());
-            user.setPassword(passwordCrypted);
+    private void validateNullAndBlank(User user) throws BusinessException {
+        if (user.getName() == null || user.getName().matches("\\s+\\s")) {
+            throw new BusinessException("name.invalid");
         }
+        if (user.getCpf() == null || user.getCpf().matches("\\s+\\s")) {
+            throw new BusinessException("cpf.invalid");
+        }
+        if (user.getEmail() == null || user.getEmail().matches("\\s+\\s")) {
+            throw new BusinessException("email.invalid");
+        }
+        if (user.getPassword() == null || user.getPassword().matches("\\s+\\s")) {
+            throw new BusinessException("password.invalid");
+        }
+        if (user.getRole() == null) {
+            throw new BusinessException("role.invalid");
+        }
+    }
 
-        return false;
+    private void validate(User user) throws BusinessException {
+
+        if (user.getName().length() < 3 | user.getName().length() > 250 | !user.getName().matches("[a-zA-Z\\s]*")) {
+            throw new BusinessException("name.invalid");
+        }
+        if (user.getPhone() != null) {
+            if (!user.getPhone().matches("[0-9]+") | (user.getPhone().length() != 10 & user.getPhone().length() != 11)) {
+                throw new BusinessException("phone.invalid");
+            }
+        }
+        if (user.getRole() == null) {
+            throw new BusinessException("role.invalid");
+        }
     }
 
     public User findUserbyEmail(String email) {
@@ -92,7 +138,10 @@ public class UserService {
         return getRepository().findByEmailAndPassword(username.toLowerCase(), CryptoUtil.hash(password));
     }
 
-    public User toUserModel(UserDTO userDTO) {
+    public User toUserModel(UserDTO userDTO) throws BusinessException {
+        if (userDTO.getRole() == null) {
+            throw new BusinessException("role.invalid");
+        }
         User user = new User();
         Role role = getRoleService().getRoleById(userDTO.getRole().getId());
         user.setId(userDTO.getId());
@@ -119,7 +168,8 @@ public class UserService {
         return userDTO;
     }
 
-	public void delete(Integer id) {
-        getRepository().delete(getRepository().findUserById(id));;
-	}
+    public void delete(Integer id) {
+        getRepository().delete(getRepository().findUserById(id));
+        ;
+    }
 }

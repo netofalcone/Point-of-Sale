@@ -2,9 +2,12 @@ package pos.model;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -12,25 +15,19 @@ import org.hibernate.annotations.Where;
 @Entity(name = "user")
 @SQLDelete(sql = "UPDATE public.user SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
-
 public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotNull
-    @NotBlank
     @Column(name = "name")
     private String name;
 
-    @NotNull
-    @NotBlank
     @Column(name = "email", unique = true)
     private String email;
 
-    @NotNull
-    @NotBlank
     @Column(name = "password")
     private String password;
 

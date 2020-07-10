@@ -9,6 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from '../../shared/shared.module';
+import {NgxMaskModule} from "ngx-mask";
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgxMaskModule
   ]
 })
 export class UserModule { }

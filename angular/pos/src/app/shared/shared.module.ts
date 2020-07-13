@@ -5,7 +5,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule} from '@angular/material/button';
 import { SearchComponent } from './search/search.component';
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CommonModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
     ReactiveFormsModule,
     NgSelectModule
   ],

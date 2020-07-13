@@ -1,14 +1,11 @@
-<<<<<<< HEAD
 import { ModalDeleteComponent } from './../modal-delete/modal-delete.component';
-=======
 import { AppConstants } from './../../../app-constants';
->>>>>>> 85845f76450982ca50f37d0ced4ac7be71947481
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { UserEditComponent } from '../user-edit/user-edit.component';
-import {UserViewModalComponent} from "../user-view-modal/user-view-modal.component";
+import {UserViewModalComponent} from '../user-view-modal/user-view-modal.component';
 
 @Component({
   selector: 'app-user-list',
@@ -41,20 +38,20 @@ export class UserListComponent implements OnInit {
     this.userService.setId(id);
     this.dialog.open(UserEditComponent);
   }
-<<<<<<< HEAD
+
 
   openDeleteDialog(id: number){
     this.userService.setUser(id);
     this.dialog.open(ModalDeleteComponent);
   }
 
-  openViewDialog(id: number){
+  openViewDialog(id: number) {
     console.log(id);
     this.userService.setUser(id);
     this.dialog.open(UserViewModalComponent);
-=======
+
+  }
   filterList(resultSearch) {
     this.users = resultSearch;
->>>>>>> 85845f76450982ca50f37d0ced4ac7be71947481
   }
 }

@@ -16,6 +16,7 @@ export class UserListComponent implements OnInit {
   users: any;
   url: string;
   fields: string [];
+
   constructor(private userService: UserService, private router: Router, public dialog: MatDialog) {
     this.userService.getUsers().subscribe(result => {
       this.users = result;
@@ -24,7 +25,8 @@ export class UserListComponent implements OnInit {
     this.fields = ['name'];
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   public goToHome(): void {
     this.router.navigate(['']);
@@ -34,21 +36,25 @@ export class UserListComponent implements OnInit {
     this.userService.setId(undefined);
     this.dialog.open(UserEditComponent);
   }
+
   editUser(id: number) {
     this.userService.setId(id);
     this.dialog.open(UserEditComponent);
   }
 
-  openDeleteDialog(id: number){
+  openDeleteDialog(id: number) {
     this.userService.setUser(id);
     this.dialog.open(ModalDeleteComponent);
   }
 
-  openViewDialog(id: number){
-    console.log(id);
+  openViewDialog(id: number) {
     this.userService.setUser(id);
     this.dialog.open(UserViewModalComponent);
-    filterList(resultSearch) {
+
+  }
+
+  filterList(resultSearch) {
     this.users = resultSearch;
+
   }
 }

@@ -11,10 +11,10 @@ import { NumberSymbol } from '@angular/common';
   providedIn: 'root'
 })
 export class UserService {
-  
+
   userId: number;
 
-  constructor(private http: HttpClient, private router:Router, private toast: ToastrService) { }
+  constructor(private http: HttpClient, private router: Router, private toast: ToastrService) { }
 
   isEditMode() {
     if (this.userId !== undefined) {
@@ -30,16 +30,15 @@ export class UserService {
     return this.http.get(AppConstants.baseUsers + '/' + this.userId);
   }
   getUsers() {
-    console.log();
     return this.http.get(AppConstants.baseUsers);
   }
 
-  getUserByID(){
+  getUserByID() {
     return this.http.get(AppConstants.baseUsers + '/' + this.userId);
   }
 
-  delete(dialog: MatDialog){
-    return this.http.delete(AppConstants.baseUsers+'/'+this.userId).subscribe(data =>{
+  delete(dialog: MatDialog) {
+    return this.http.delete(AppConstants.baseUsers + '/' + this.userId).subscribe(data =>{
       this.toast.success('Usuário deletado com sucesso.');
       dialog.closeAll();
     },
@@ -69,7 +68,7 @@ export class UserService {
       });
   }
 
-  setUser(id: number){
+  setUser(id: number) {
     this.userId = id;
   }
-}
+ }

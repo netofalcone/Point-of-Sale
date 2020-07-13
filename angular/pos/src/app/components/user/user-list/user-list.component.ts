@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import { ModalDeleteComponent } from './../modal-delete/modal-delete.component';
-=======
 import { AppConstants } from './../../../app-constants';
->>>>>>> 85845f76450982ca50f37d0ced4ac7be71947481
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';

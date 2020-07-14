@@ -17,7 +17,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatDialogModule,
     MatButtonModule,
     ReactiveFormsModule,
-    NgSelectModule,
+    NgSelectModule
   ],
   exports: [ErrorMessageComponent, SearchComponent]
 })

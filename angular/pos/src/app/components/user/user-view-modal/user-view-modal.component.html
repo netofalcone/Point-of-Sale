@@ -13,7 +13,7 @@
           <div class="form-group row">
             <div class="col-12">
               <label> Nome </label>
-              <input class="form-control" type="text" placeholder="Name" [value]="user?.name" disabled>
+              <input type="text" class="form-control" disabled value="{{user?.name}}">
             </div>
           </div>
         </div>
@@ -21,7 +21,7 @@
           <div class="form-group row">
             <div class="col-12">
               <label> Cargo </label>
-              <input class="form-control" type="text" placeholder="Cargo" [value]="user?.role.name" disabled>
+              <input type="text" class="form-control" disabled value="{{user?.role.name}}">
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@
           <div class="form-group row">
             <div class="col-12">
               <label> Email </label>
-              <input class="form-control" type="text" placeholder="Email" [value]="user?.email" disabled>
+              <input type="text" class="form-control" disabled value="{{user?.email}}">
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
           <div class="form-group row">
             <div class="col-12">
               <label> CPF </label>
-              <input class="form-control" type="text" placeholder="CPF" [value]="user?.cpf" disabled>
+              <input type="text" class="form-control" disabled value="{{user?.cpf | mask: '000.000.000-00'}}">
             </div>
           </div>
         </div>
@@ -45,12 +45,11 @@
           <div class="form-group row">
             <div class="col-12">
               <label> Telefone </label>
-              <input class="form-control"  type="text" placeholder="Telefone" [value]="user?.phone"  disabled>
+              <input type="text" class="form-control" disabled value="{{user?.phone | mask: '(00) 0000-0000||(00) 0 0000-0000'}}">
             </div>
           </div>
         </div>
       </div>
-
       </div>
 
     <div id="btns-action" class="text-right m-1">

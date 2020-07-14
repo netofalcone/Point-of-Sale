@@ -66,7 +66,7 @@
           <div class="col-12">
             <label for="password">Senha</label>
             <span class="validationRequired"> *</span>
-            <input matInput type="text" class="form-control" formControlName="newPassword" name="password" id="password"
+            <input matInput type="password" class="form-control" formControlName="newPassword" name="password" id="password"
               (change)="revalidPasswordConfirm()" placeholder="Digite a Senha">
             <app-error-message [control]="editForm.get('newPassword')"></app-error-message>
           </div>
@@ -77,7 +77,7 @@
           <div class="col-12">
             <label for="passwordConfirm">Confirmação de Senha</label>
             <span class="validationRequired"> *</span>
-            <input matInput type="text" class="form-control" formControlName="passwordConfirm" name="passwordConfirm"
+            <input matInput type="password" class="form-control" formControlName="passwordConfirm" name="passwordConfirm"
               id="passwordConfirm" placeholder="Insira a senha novamente">
             <app-error-message [control]="editForm.get('passwordConfirm')"></app-error-message>
           </div>

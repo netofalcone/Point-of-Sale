@@ -1,0 +1,19 @@
+#delete-card{
+  background-color: #ffffff;
+  height: 45%;
+  width: 25vw;
+  text-align: center;
+}
+#btn-cancel{
+  background-color: #787878;
+  border: none;
+  width: 70%;
+  height: 3vw;
+}
+#btn-del{
+  background-color: #3f51b5;
+  border: none;
+  width: 70%;
+  height: 3vw;
+}
+

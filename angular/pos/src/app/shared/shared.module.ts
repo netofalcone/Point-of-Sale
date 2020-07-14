@@ -7,18 +7,20 @@ import { MatButtonModule} from '@angular/material/button';
 import { SearchComponent } from './search/search.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import {ModalDeleteComponent} from './modal-delete/modal-delete.component';
+
 
 @NgModule({
-  declarations: [ErrorMessageComponent, SearchComponent],
+  declarations: [ErrorMessageComponent, SearchComponent, ModalDeleteComponent],
   imports: [
     CommonModule,
     MatFormFieldModule,
     MatDialogModule,
     MatButtonModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
   ],
-  exports: [ErrorMessageComponent, SearchComponent]
+  exports: [ErrorMessageComponent, SearchComponent, ModalDeleteComponent]
 })
 export class SharedModule {
 }

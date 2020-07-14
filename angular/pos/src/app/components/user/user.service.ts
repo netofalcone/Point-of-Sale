@@ -25,6 +25,15 @@ export class UserService {
   setId(id) {
     this.userId = id;
   }
+  delete(dialog: MatDialog){
+    return this.http.delete(AppConstants.baseUsers + '/' + this.userId).subscribe(data =>{
+        this.toast.success('Usuário deletado com sucesso.');
+        dialog.closeAll();
+      },
+      error => {
+        this.toast.error('Erro ao deletar usuário.');
+      });
+  }
   getUser() {
     return this.http.get(AppConstants.baseUsers + '/' + this.userId);
   }

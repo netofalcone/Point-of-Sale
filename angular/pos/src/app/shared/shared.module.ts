@@ -20,4 +20,5 @@ import { NgSelectModule } from '@ng-select/ng-select';
   ],
   exports: [ErrorMessageComponent, SearchComponent]
 })
-export class SharedModule { }
+export class SharedModule {
+}

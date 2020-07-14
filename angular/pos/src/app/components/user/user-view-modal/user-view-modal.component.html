@@ -1,0 +1,64 @@
+<div *ngIf="user">
+  <form  autocomplete="off">
+    <div id="view-edit">
+
+      <div class="row m-0 mb-3">
+        <div class="col-12 m-0 p-0">
+          <h1>Visualizar Usuário</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-sm-12">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> Nome </label>
+              <input type="text" class="form-control" disabled value="{{user?.name}}">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> Cargo </label>
+              <input type="text" class="form-control" disabled value="{{user?.role.name}}">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> Email </label>
+              <input type="text" class="form-control" disabled value="{{user?.email}}">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> CPF </label>
+              <input type="text" class="form-control" disabled value="{{user?.cpf | mask: '000.000.000-00'}}">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group row">
+            <div class="col-12">
+              <label> Telefone </label>
+              <input type="text" class="form-control" disabled value="{{user?.phone | mask: '(00) 0000-0000||(00) 0 0000-0000'}}">
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    <div id="btns-action" class="text-right m-1">
+      <button type="submit" id="btn-back" class="btn btn-lg btn-primary ml-4" (click)="goToList()">Voltar</button>
+    </div>
+  </form>
+
+</div>
+
+
+
+

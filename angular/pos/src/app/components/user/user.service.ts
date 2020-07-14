@@ -11,6 +11,7 @@ import { NumberSymbol } from '@angular/common';
   providedIn: 'root'
 })
 export class UserService {
+
   userId: number;
 
   constructor(private http: HttpClient, private router: Router, private toast: ToastrService) { }
@@ -40,6 +41,11 @@ export class UserService {
   getUsers() {
     return this.http.get(AppConstants.baseUsers);
   }
+
+  getUserByID() {
+    return this.http.get(AppConstants.baseUsers + '/' + this.userId);
+  }
+
   updateUser(user, dialog: MatDialog) {
     return this.http.patch(AppConstants.baseUsers + '/' + this.userId, user).subscribe(data => {
       this.toast.success('Usuário atualizado com sucesso.');
@@ -61,7 +67,7 @@ export class UserService {
       });
   }
 
-  setUserDeleted(id: number){
+  setUser(id: number) {
     this.userId = id;
   }
-}
+ }

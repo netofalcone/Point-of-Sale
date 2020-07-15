@@ -21,7 +21,7 @@ CREATE TABLE role_permission (
 );
 
 CREATE TABLE public.user (
-	id INTEGER NOT NULL PRIMARY KEY,
+	id SERIAL NOT NULL PRIMARY KEY,
 	name VARCHAR(250) NOT NULL,
 	email VARCHAR(250) NOT null,
 	password VARCHAR(100) NOT null,

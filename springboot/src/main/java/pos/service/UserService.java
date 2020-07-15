@@ -163,13 +163,12 @@ public class UserService {
         userDTO.setEmail(user.getEmail());
         userDTO.setName(user.getName());
         userDTO.setPhone(user.getPhone());
-
+        userDTO.setCpf(user.getCpf());
         userDTO.setRole(roleDTO);
         return userDTO;
     }
 
     public void delete(Integer id) {
         getRepository().delete(getRepository().findUserById(id));
-        ;
     }
 }

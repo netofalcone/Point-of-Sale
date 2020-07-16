@@ -73,9 +73,7 @@ public class UserService {
         if (getRepository().findByCpf(user.getCpf()) != null) {
             throw new BusinessException("cpf.exists");
         }
-        if (!user.getEmail().matches("[a-z0-9.\\-_]+@[a-z0-9]+.[a-z]+(\\.[a-z]+)+")) {
-            throw new BusinessException("email.invalid");
-        }
+
         if (getRepository().findByEmail(user.getEmail()) != null) {
             throw new BusinessException("email.exists");
         }
@@ -84,17 +82,39 @@ public class UserService {
         }
     }
 
-    public User update(User user) throws Exception {
+    public User update(Integer id, User user) throws Exception {
         this.validateUpdate(user);
-        return userRepository.save(user);
+
+        User userTemporary = this.getRepository().findUserById(id);
+
+        if(user.getEmail() != userTemporary.getEmail() && user.getEmail() != null){
+            userTemporary.setEmail(user.getEmail());
+        }
+        if(user.getName() != userTemporary.getName() && user.getName() != null){
+            userTemporary.setName(user.getName());
+        }
+        if(user.getPhone() != userTemporary.getPhone() && user.getPhone()  != null){
+            userTemporary.setPhone(user.getPhone());
+        }
+        if(user.getRole() != userTemporary.getRole() && user.getRole() != null){
+            userTemporary.setRole(user.getRole());
+        }
+
+        return userRepository.save(userTemporary);
     }
 
-    private void validateUpdate(User user) throws BusinessException {
-        User userTemporary = this.findUserbyEmail(user.getEmail());
+    private void validateUpdate( User user) throws BusinessException {
+
         validate(user);
-        if (getRepository().findByEmail(user.getEmail()) != null & userTemporary.getEmail() != user.getEmail()) {
-            throw new BusinessException("email.exists");
+        if (user.getCpf() != null) {
+            throw new BusinessException("cpf.not.allowed.change");
         }
+
+        if (user.getPassword() != null) {
+            throw new BusinessException("password.not.allowed.change");
+        }
+
+
     }
 
     private void validateNullAndBlank(User user) throws BusinessException {
@@ -116,6 +136,11 @@ public class UserService {
     }
 
     private void validate(User user) throws BusinessException {
+
+
+        if (!user.getEmail().matches("[a-z0-9.\\-_]+@[a-z0-9]+.[a-z]+(\\.[a-z]+)+") ) {
+            throw new BusinessException("email.invalid");
+        }
 
         if (user.getName().length() < 3 | user.getName().length() > 250 | !user.getName().matches("[a-zA-Z\\s]*")) {
             throw new BusinessException("name.invalid");
@@ -163,12 +188,13 @@ public class UserService {
         userDTO.setEmail(user.getEmail());
         userDTO.setName(user.getName());
         userDTO.setPhone(user.getPhone());
-        userDTO.setCpf(user.getCpf());
+
         userDTO.setRole(roleDTO);
         return userDTO;
     }
 
     public void delete(Integer id) {
         getRepository().delete(getRepository().findUserById(id));
+        ;
     }
 }

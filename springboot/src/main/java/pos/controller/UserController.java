@@ -5,13 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import pos.dto.UserDTO;
 import pos.model.User;
@@ -50,12 +44,12 @@ public class UserController {
         return new ResponseEntity<>(userSalved, HttpStatus.CREATED);
     }
 
-/*    @PutMapping(value = "/", produces = "Application/json")
-    public ResponseEntity<User> update(@RequestBody User user) throws Exception {
-        User userUpdate = getService().update(user);
-        return new ResponseEntity<>(userUpdate, HttpStatus.OK);
+    @PatchMapping(value = "/{id}", produces = "Application/json")
+    public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO user) throws Exception {
+        User userUpdate = getService().update( id, getService().toUserModel(user));
+        return new ResponseEntity<>( userService.toUserDto(userUpdate), HttpStatus.OK);
     }
-*/
+
     @DeleteMapping(value = "/{id}", produces = "Application/text")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Integer id) {
         userService.delete(id);

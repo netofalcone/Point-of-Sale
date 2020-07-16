@@ -1,24 +1,12 @@
  <div id="delete-card">
-      <div class="row m-0 mb-3">
-        <div class="col-12 m-0 p-0">
-          <h2>Tem certeza de que deseja excluir o item selecionado?</h2>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-12 col-sm-6">
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <button type="button" id="btn-del" mat-raised-button (click)="delete()" class="btn btn-lg btn-primary">Excluir </button>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6">
-          <div class="form-group row">
-            <div class="col-12">
-              <button type="button" id="btn-cancel" mat-raised-button (click)="goToList()" class="btn btn-lg btn-primary">Cancelar</button>
-            </div>
-          </div>
-        </div>
-      </div>
+   <div class="content">
+          <h2>Tem certeza de que deseja excluir o item selecionado?</h2>
+
+     <div class="flex">
+       <button type="button" id="btn-del"  (click)="delete()" class="btn btn-lg btn-primary">Sim</button>
+       <button type="button" id="btn-cancel"  (click)="goToList()" class="btn btn-lg btn-primary">Não</button>
+     </div>
+   </div>
+
  </div>

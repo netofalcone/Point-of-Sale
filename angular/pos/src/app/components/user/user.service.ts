@@ -13,7 +13,6 @@ import { NumberSymbol } from '@angular/common';
 export class UserService {
 
   userId: number;
-
   constructor(private http: HttpClient, private router: Router, private toast: ToastrService) { }
 
   isEditMode() {
@@ -29,8 +28,8 @@ export class UserService {
   getUser() {
     return this.http.get(AppConstants.baseUsers + '/' + this.userId);
   }
-  getUsers() {
-    return this.http.get(AppConstants.baseUsers);
+  async getUsers() {
+    return await this.http.get(AppConstants.baseUsers).toPromise();
   }
 
   getUserByID() {

@@ -32,7 +32,7 @@ export class UserEditComponent implements OnInit {
       id: new FormControl('', []),
       name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(250), Validation.validateFieldName()]),
       email: new FormControl('', [Validators.required, Validators.email, Validation.validateFieldEmail()]),
-      phone: new FormControl('', [Validation.validateIsPhone()]),
+      phone: new FormControl('', []),
       cpf: new FormControl('', [Validators.required, Validators.maxLength(20), Validation.validateCpf()]),
       newPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validation.validateFieldPassword()]),
       passwordConfirm: new FormControl('', [Validators.required, Validation.equalsTO('newPassword')]),
@@ -44,7 +44,7 @@ export class UserEditComponent implements OnInit {
   }
   updateValidateFieldPhone() {
     if (this.editForm.get('phone') !== undefined) {
-      this.editForm.get('phone').setValidators([Validators.minLength(10), Validators.maxLength(11)]);
+      this.editForm.get('phone').setValidators([Validators.minLength(10), Validators.maxLength(11), Validation.validateIsPhone()]);
     } else {
       this.editForm.get('phone').clearValidators();
     }

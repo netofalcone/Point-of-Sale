@@ -19,9 +19,7 @@ export class UserListComponent implements OnInit {
   fields: string [];
 
   constructor(private userService: UserService, private router: Router, public dialog: MatDialog) {
-    this.userService.getUsers().subscribe(result => {
-      this.users = result;
-    });
+    this.fetchUsers();
     this.url = AppConstants.baseUsers;
     this.fields = ['name'];
   }
@@ -35,25 +33,37 @@ export class UserListComponent implements OnInit {
 
   createUser() {
     this.userService.setId(undefined);
-    this.dialog.open(UserEditComponent);
+    const dialogRef = this.dialog.open(UserEditComponent);
+    this.updateList(dialogRef);
   }
 
   editUser(id: number) {
     this.userService.setId(id);
-    this.dialog.open(UserEditComponent);
+    const dialogRef = this.dialog.open(UserEditComponent);
+    this.updateList(dialogRef);
   }
 
   openDeleteDialog(id: number) {
     this.userService.setUser(id);
-    this.dialog.open(ModalDeleteComponent);
+    const dialogRef = this.dialog.open(ModalDeleteComponent);
+    this.updateList(dialogRef);
   }
-
   openViewDialog(id: number) {
     this.userService.setUser(id);
     this.dialog.open(UserViewModalComponent);
-
   }
+
   filterList(resultSearch) {
     this.users = resultSearch;
+  }
+  fetchUsers() {
+    this.userService.getUsers().then(result => {
+      this.users = result;
+    });
+  }
+  updateList(dialogRef) {
+    dialogRef.afterClosed().subscribe(result => {
+      this.fetchUsers();
+    });
   }
 }

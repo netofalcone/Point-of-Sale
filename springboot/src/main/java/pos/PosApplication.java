@@ -22,6 +22,5 @@ public class PosApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PosApplication.class, args);
 
-		System.out.println(CryptoUtil.hash("123"));
 	}
 }

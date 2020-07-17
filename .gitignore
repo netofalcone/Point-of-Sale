@@ -4,3 +4,23 @@
 springboot/src/main/resources/application.properties
 
 .angulardoc.json
+spring-boot/HELP.md
+spring-boot/target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+spring-boot/.apt_generated
+spring-boot/.classpath
+spring-boot/.factorypath
+spring-boot/.project
+spring-boot/.settings
+spring-boot/.springBeans
+spring-boot/.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr

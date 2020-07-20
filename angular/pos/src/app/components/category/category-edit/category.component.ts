@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-category-edit',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryComponent implements OnInit {
 
-  constructor() { }
+  editForm: FormGroup;
+
+  constructor() {
+
+   }
 
   ngOnInit(): void {
   }

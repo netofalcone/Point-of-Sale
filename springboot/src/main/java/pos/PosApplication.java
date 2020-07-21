@@ -21,6 +21,5 @@ import pos.core.util.CryptoUtil;
 public class PosApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PosApplication.class, args);
-
 	}
 }
